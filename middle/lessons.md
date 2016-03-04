@@ -255,4 +255,6 @@ ReactDOM.render(
 
 If you think this feels like Flux or Redux, you'd be right! We're missing a few bits and the structure isn't quite right - ideally an action wouldn't directly talk to the store, but instead send it to a dispatcher that would then send it onto the store, such that actions and the store are kept entirely separate. We'll tackle this section next with an Redux example.
 
-__Exercise__: with the code as it is, can you add a 'Delete' button to each todo that wehn clicked will cause the todo to be removed from the store?
+__Exercise__: with the code as it is, can you add a 'Delete' button to each todo that when clicked will cause the todo to be removed from the store?
+
+(Solution is on branch `middle-2-delete-exercise`)
