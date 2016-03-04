@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Redux = require('redux');
+var thunkMiddleware = require('redux-thunk');
 
 var ReactRedux = require('react-redux');
 var Provider = ReactRedux.Provider;
@@ -10,17 +11,28 @@ var connect = ReactRedux.connect;
 var githubReducers = require('./reducers');
 var UsernameInput = require('./username-input');
 
+var devTools = window.devToolsExtension ? window.devToolsExtension() : function(x) { return x };
+
+
 var store = Redux.createStore(
   githubReducers,
-  window.devToolsExtension ? window.devToolsExtension() : function(x) { return x }
+  {},
+  Redux.compose(
+    Redux.applyMiddleware(
+      thunkMiddleware
+    ),
+    devTools
+  )
 );
 
 var App = React.createClass({
   render: function() {
+    var userObj = this.props.users[this.props.activeUser];
     return (
       <div>
         <UsernameInput />
-        <p>List data here...</p>
+        <p>Current user: { this.props.activeUser }</p>
+        { userObj && userObj.data.public_repos }
       </div>
     );
   }
@@ -28,7 +40,8 @@ var App = React.createClass({
 
 var ConnectedApp = connect(function(state) {
   return {
-    userData: state.userData
+    activeUser: state.activeUser,
+    users: state.users
   };
 })(App);
 

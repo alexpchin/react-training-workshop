@@ -1,11 +1,11 @@
 var React = require('react');
 var connect = require('react-redux').connect;
-
+var fetchUser = require('./actions').fetchUser;
 
 var UsernameInput = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    // deal with a new username
+    this.props.dispatch(fetchUser(this.refs.userInput.value));
   },
 
   render: function() {

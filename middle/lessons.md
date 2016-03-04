@@ -681,6 +681,7 @@ We'll store an object in our state with one key per username that looks like so:
 
 ```js
 {
+  activeUser: 'jackfranklin',
   users: {
     jackfranklin: {
       isFetching: false,
@@ -688,6 +689,188 @@ We'll store an object in our state with one key per username that looks like so:
     }
   }
 }
+```
+
+The `activeUser` key will define which user we're looking at currently. Now we can start writing our reducer - we'll use the `combineReducers` trick we learned previously to make smaller reducers.
+
+```js
+var combineReducers = require('redux').combineReducers;
+
+var activeUser = function(state, action) {
+  if (!state) {
+    state = '';
+  }
+
+  switch (action.type) {
+    case 'GITHUB_RESPONSE':
+      return action.username;
+    default:
+      return state;
+  }
+}
+
+var users = function(state, action) {
+  if (!state) {
+    state = {};
+  }
+
+  switch (action.type) {
+    case 'GITHUB_REQUEST':
+      var newUserObj = {}
+      newUserObj[action.username] = {
+        isFetching: true,
+        data: {}
+      }
+
+      return Object.assign({}, state, newUserObj);
+
+    case 'GITHUB_RESPONSE':
+      var newState = {};
+      newState[action.username] = {
+        isFetching: false,
+        data: action.data
+      }
+
+      return Object.assign({}, state, newState);
+
+    default:
+      return state;
+  }
+}
+
+var githubReducer = combineReducers({
+  activeUser: activeUser,
+  users: users
+})
+
+module.exports = githubReducer;
+```
+
+I find it really nice being able to think about how to update the state with each user action ahead of time. If you're thinking we could maybe tidy up the `users` reducer you'd be right, and we'll see how to in a bit.
+
+### Triggering events
+
+Now we can write the code to trigger the `GITHUB_REQUEST` action, but to do so we need some Redux middleware, thunk.
+
+A thunk is defined as a subroutine in computer programming, but in the case of Redux, a thunk is an action creator that returns a function instead of an action object. Crucially for us, it's allowed to have side effects, such as _triggering HTTP requests_. When you have an action that needs to be asynchronous, you probably want to use a thunk. This lets us wrap up the entire process of triggering a reqeust and dealing with the response in one action.
+
+Before we look at how to set up support for thunks (they come in their own package, `redux-thunk`), let's write the action. We'll call this one `fetchUser`:
+
+```js
+fetchUser: function(username) {
+  // this is what make a thunk creator different
+  // it returns a function that will be called with the dispatch method from redux
+  // so it can dispatch multiple actions
+  return function(dispatch) {
+    // first, dispatch the GITHUB_REQUEST action
+    dispatch(actions.requestGithub(username));
+
+    return fetch('https://api.github.com/users/' + username)
+      .then(function(resp) { return resp.json() })
+      .then(function(json) {
+        dispatch(actions.receiveGithub(username, json));
+      });
+    // in a real app we would deal with an error
+  }
+}
+```
+
+A thunk action creator is an action creator that will trigger at least one other action. Note that we don't ever give this action a `type` property. A thunk action can never be directly given to a reducer, but instead should trigger actions that will be.
+
+PS: if `fetch` isn't implemented in your browser of choice, you can install the [window.fetch polyfill](https://github.com/github/fetch).
+
+Now we need to configure our app with support for thunks. First, let's install `redux-thunk`:
+
+```
+npm install redux-thunk --save
+```
+
+And then configure it using `applyMiddleware`. Redux's middleware is similar to that in Node, it's just a way of passing an action through a series of functions. We won't go into them in much detail, but there is a [detailed guide on the Redux site](http://redux.js.org/docs/advanced/Middleware.html).
+
+> Redux middleware solves different problems than Express or Koa middleware, but in a conceptually similar way. It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer. People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
+
+```js
+var store = Redux.createStore(
+  githubReducers,
+  {},
+  Redux.compose(
+    Redux.applyMiddleware(
+      thunkMiddleware
+    ),
+    devTools
+  )
+);
+```
+
+Our store creation is now a little more complex; now we need to pass middleware into `createStore`, we also have to pass the second argument to set the initial state of the store, which will be an empty object. We then apply the middleware and add on the dev tool extension too, which we merge into one function using `Redux.compose` ([docs](http://redux.js.org/docs/api/compose.html).
+
+Finally, we can now write the code to start getting this running! Let's make the button create a `fetchUser` action with the username from the text input:
 
 
+```js
+var React = require('react');
+var connect = require('react-redux').connect;
+var fetchUser = require('./actions').fetchUser;
 
+var UsernameInput = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    this.props.dispatch(fetchUser(this.refs.userInput.value));
+  },
+
+  render: function() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" ref="userInput" />
+        <button type="submit">Fetch User</button>
+      </form>
+    );
+  }
+});
+
+var ConnectedInput = connect()(UsernameInput);
+
+module.exports = ConnectedInput;
+```
+
+And then we can update `App` to render some of this data:
+
+```js
+// requires left out
+var devTools = window.devToolsExtension ? window.devToolsExtension() : function(x) { return x };
+
+var store = Redux.createStore(
+  githubReducers,
+  {},
+  Redux.compose(
+    Redux.applyMiddleware(
+      thunkMiddleware
+    ),
+    devTools
+  )
+);
+
+var App = React.createClass({
+  render: function() {
+    var userObj = this.props.users[this.props.activeUser];
+    return (
+      <div>
+        <UsernameInput />
+        <p>Current user: { this.props.activeUser }</p>
+        { userObj && userObj.data.public_repos }
+      </div>
+    );
+  }
+});
+
+var ConnectedApp = connect(function(state) {
+  return {
+    activeUser: state.activeUser,
+    users: state.users
+  };
+})(App);
+
+// ReactDOM render left out
+```
+
+And with that we ca now make requests to GitHub and dispatch actions as expected!
