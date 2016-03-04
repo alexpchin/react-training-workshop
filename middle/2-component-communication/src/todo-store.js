@@ -12,6 +12,14 @@ var TodoStore = {
     this.onChange();
   },
 
+  deleteTodo: function(todo) {
+    this._state.todos = this._state.todos.filter(function(t) {
+      return t !== todo;
+    });
+
+    this.onChange();
+  },
+
   onChange: function() {}
 }
 
