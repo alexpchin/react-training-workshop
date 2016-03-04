@@ -259,6 +259,62 @@ __Exercise__: with the code as it is, can you add a 'Delete' button to each todo
 
 (Solution is on branch `middle-2-delete-exercise`)
 
+## 2.5-redux-intro
+
+Before we look at Redux with React, let's do a basic Redux example on its own. This will help gain some familiarity with Redux without having to deal with the React specific parts.
+
+Credit for this example goes to the [Redux README](http://redux.js.org/index.html).
+
+First, I'll install Redux:
+
+```
+npm install redux --save
+```
+
+The key parts of redux to note:
+- your entire app's state is stored in a single object that is called the _store_.
+- to change a state you emit an action, an object describing what happened.
+- _reducers_ take an action and produce the new state.
+
+Let's build out a simple counter example.
+
+First we define our app as a _reducer_. This takes the current state and the action. Each action has a `type` property to describe it.
+
+The reducer is expected to return the new state based on the existing state and the given user action.
+
+```js
+function counter(state, action) {
+  if (!state) state = 0;
+
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+```
+
+We then use Redux's `createStore` to create the store, which will hold our application's state. We send actions to the store, and it will create the new state by sending those actions to our reducer.
+
+```js
+var store = createStore(counter);
+
+store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: 'DECREMENT' });
+store.dispatch({ type: 'INCREMENT' });
+console.log('Current store', store.getState());
+```
+
+We then `dispatch` actions and log out the current state. And that's it! That's Redux is a nutshell.
+
+__Exercise__: add a new action `RESET` that will set the counter back to 0.
+
+
+
 ## 3-redux
 
 Now let's look at using [Redux](http://redux.js.org/index.html)  rather than implementing ourselves.
@@ -746,7 +802,7 @@ var githubReducer = combineReducers({
 module.exports = githubReducer;
 ```
 
-I find it really nice being able to think about how to update the state with each user action ahead of time. If you're thinking we could maybe tidy up the `users` reducer you'd be right, and we'll see how to in a bit.
+I find it really nice being able to think about how to update the state with each user action ahead of time. If you're thinking we could maybe tidy up the `users` reducer you'd be right, you could write a reducer that just deals with the object for a given user, and have another reducer for all the users. [There's an example in the Redux docs](http://redux.js.org/docs/advanced/AsyncActions.html), and if you'd like to give it a try please do at the end of this section along with the exercises :)
 
 ### Triggering events
 
