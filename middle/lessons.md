@@ -645,5 +645,49 @@ This part of the guide is heavily inspired by the [async actions](http://redux.j
 
 Let's build an app that gets some data from the GitHub API for a specific user. We'll need a text box first to get the username we want to fetch data for. We'll use Redux to store a list of all the users that we have fetched and store them in state.
 
+If you're following along here, you will want to check out `middle-5-starter-branch` for the starting point.
+
+When we have an async action we need to have multiple events for them:
+
+- one to notify that the request has started
+- one to notify that the request was successful
+- one to noify that the request failed
+
+In our case we'll pretend we live in a lovely world where no HTTP requests ever fail, and ignore the failure case. Don't do this in a real app!
+
+Let's define our actions:
+
+```
+var actions = {
+  requestGithub: function(username) {
+    return {
+      type: 'GITHUB_REQUEST',
+      username: username
+    }
+  },
+  receiveGithub: function(username, json) {
+    return {
+      type: 'GITHUB_RESPONSE',
+      username: username,
+      data: json
+    }
+  }
+};
+
+module.exports = actions;
+```
+
+We'll store an object in our state with one key per username that looks like so:
+
+```js
+{
+  users: {
+    jackfranklin: {
+      isFetching: false,
+      data: {...github response...}
+    }
+  }
+}
+
 
 
