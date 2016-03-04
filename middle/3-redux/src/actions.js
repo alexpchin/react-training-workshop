@@ -4,6 +4,12 @@ var actions = {
       type: 'ADD_TODO',
       todo: todo
     }
+  },
+  deleteTodo: function(todo) {
+    return {
+      type: 'DELETE_TODO',
+      todo: todo
+    }
   }
 };
 

@@ -8,6 +8,14 @@ var todoReducer = function(state, action) {
       });
     }
 
+    case 'DELETE_TODO': {
+      return Object.assign({}, state, {
+        todos: state.todos.filter(function(todo) {
+          return todo !== action.todo;
+        })
+      });
+    }
+
     default:
       return state
   }
