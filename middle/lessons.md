@@ -635,5 +635,15 @@ var todoReducer = combineReducers({
 
 Here we map each key in our `state` object to a reducer that is responsible for dealing with just that part of the state. This is a cleaner separation of concerns, and much nicer to work with.
 
+__Exercise__: add a button to let me log out when I'm logged in. It should only appear when the user is logged in.
+
+## 5-async-actions
+
+So far we've only dealt with actions that are synchronous. Normally though we will have some form of async action, the most common of which being an HTTP request to fetch some data.
+
+This part of the guide is heavily inspired by the [async actions](http://redux.js.org/docs/advanced/AsyncActions.html) part of the Redux docs.
+
+Let's build an app that gets some data from the GitHub API for a specific user. We'll need a text box first to get the username we want to fetch data for. We'll use Redux to store a list of all the users that we have fetched and store them in state.
+
 
 
