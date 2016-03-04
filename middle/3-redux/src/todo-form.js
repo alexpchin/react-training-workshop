@@ -1,7 +1,6 @@
 var React = require('react');
 var connect = require('react-redux').connect;
 
-var TodoActions = require('./todo-actions');
 var addTodo = require('./actions').addTodo;
 
 var TodoForm = React.createClass({
