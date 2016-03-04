@@ -431,6 +431,209 @@ __Exercise__: Add the ability to delete a todo, but this time using Redux. You'l
 
 The solution for this exercise is on `middle-3-delete-exercise`.
 
+## 4-better-redux
+
+As your app grows you'll want to split your reducers up a little to make them easier to work with. Additionally, you'll probably want some handy developer tools!
+
+Redux ships with developer tools that you can integrate into your project.
+
+If you're using Google Chrome, you can use the [Redux Devtools Extension](https://github.com/zalmoxisus/redux-devtools-extension). You just need to update your `createStore` call:
+
+```js
+var store = Redux.createStore(
+  todoAppReducers,
+  window.devToolsExtension ? window.devToolsExtension() : function(x) { return x }
+);
+```
+
+And then you have dev tools available!
+
+If you're not on Chrome, you can [set it up manually with a bit more effort](https://github.com/gaearon/redux-devtools/blob/master/docs/Walkthrough.md). We won't go through this in the workshop, but I'll leave it as an exercise to the reader :)
+
+### More reducers
+
+Our current state only contains `todos`, but in reality you're probably going to have more data to deal with. To fake this we're going to store a `user` object on our state to represent the logged in user, imagining in reality there's a full authentication system backing this.
+
+
+First, let's update our reducer to deal with this new `user` key in our state:
+
+```js
+var todoReducer = function(state, action) {
+  if (!state) state = {
+    todos: [],
+    user: {}
+  };
+  ...
+}
+```
+
+And let's define an action to log the user in:
+
+```js
+logIn: function(username) {
+  return {
+    type: 'USER_LOGIN',
+    username: username
+  }
+}
+```
+
+And lets update `<Header />` to have a button to log a user in - we'll also use `connect` so it has access to the `user` from the state.
+
+```js
+var React = require('react');
+var TodoForm = require('./todo-form');
+var connect = require('react-redux').connect;
+
+var logIn = require('./actions').logIn;
+
+var Header = React.createClass({
+
+  logInClick: function() {
+    this.props.dispatch(logIn('jack'));
+  },
+
+  renderLoggedInBanner(username) {
+    return <p>Logged in as {username}</p>;
+  },
+
+  renderLogInButton() {
+    return <button onClick={this.logInClick}>Log In</button>;
+  },
+
+  render: function() {
+    var user = this.props.user;
+
+    return (
+      <div>
+        { user.username && this.renderLoggedInBanner(user.username) }
+        { !user.username && this.renderLogInButton() }
+        <p>Totally awesome todo app</p>
+        <TodoForm />
+      </div>
+    );
+  }
+});
+
+var ConnectedHeader = connect(function(state) {
+  return { user: state.user };
+})(Header);
+
+module.exports = ConnectedHeader;
+```
+
+I've hard coded the username to 'jack' just to save time and space on code.
+
+Finally, we need our reducer to deal with this action happening.
+
+```js
+case 'USER_LOGIN': {
+  return Object.assign({}, state, {
+    user: { username: action.username }
+  });
+}
+```
+
+And now we can log a user in.
+
+### combineReducers
+
+If you take a look at our reducer, it's a bit of a mess. It deals with reducing either a list of todos, or a user object:
+
+```
+var todoReducer = function(state, action) {
+  if (!state) state = {
+    todos: [],
+    user: {}
+  };
+
+  switch (action.type) {
+    case 'ADD_TODO': {
+      return Object.assign({}, state, {
+        todos: state.todos.concat([action.todo])
+      });
+    }
+
+    case 'USER_LOGIN': {
+      return Object.assign({}, state, {
+        user: { username: action.username }
+      });
+    }
+
+    default:
+      return state
+  }
+}
+
+module.exports = todoReducer;
+```
+
+It would be best instead to split the reducer into two functions, one that can reduce todos, and one that can reduce user actions.
+
+__Exercise__: before continuing with this, have a think about how you might split up `todoReducer`.
+
+First, we'll write a `todos` function that can reduce todos:
+
+```js
+var todos = function(state, action) {
+  if (!state) state = [];
+
+  switch (action.type) {
+    case 'ADD_TODO': {
+      return state.concat([action.todo]);
+    }
+
+    default:
+      return state;
+  }
+}
+```
+
+Note that this reducer doesn't get the full state, but instead just an array of todos. This is much better! We can do the same with the users to create a `user` reducer:
+
+```js
+var user = function(state, action) {
+  if (!state) state = {};
+
+  switch (action.type) {
+    case 'USER_LOGIN': {
+      return { username: action.username }
+    }
+
+    default:
+      return state
+  }
+}
+```
+
+And now finally, our `todoReducer` can just defer its actions to the two smaller reducers:
+
+```js
+var todoReducer = function(state, action) {
+  if (!state) state = {};
+
+  return {
+    user: user(state.user, action),
+    todos: todos(state.todos, action)
+  }
+}
+```
+
+Now our main reducer is much nicer, and we have a bunch of smaller functions to deal with, which are also easier to test (we'll look at testing later!).
+
+It turns out that this is such a useful, common pattern that Redux provides `combineReducers` to do just this.
+
+
+```
+var combineReducers = require('redux').combineReducers;
+
+var todoReducer = combineReducers({
+  todos: todos,
+  user: user
+});
+```
+
+Here we map each key in our `state` object to a reducer that is responsible for dealing with just that part of the state. This is a cleaner separation of concerns, and much nicer to work with.
 
 
 
