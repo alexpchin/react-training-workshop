@@ -258,3 +258,179 @@ If you think this feels like Flux or Redux, you'd be right! We're missing a few 
 __Exercise__: with the code as it is, can you add a 'Delete' button to each todo that when clicked will cause the todo to be removed from the store? You might find it easier if you move the rendering of Todos and make a `Todo` component that is rendered for each todo.
 
 (Solution is on branch `middle-2-delete-exercise`)
+
+## 3-redux
+
+Now let's look at using [Redux](http://redux.js.org/index.html)  rather than implementing ourselves.
+
+First, we need to install. Note that Redux can be used without React, so we'll install the react-redux package too.
+
+```
+npm install --save redux react-redux
+```
+
+PS: take a deep breath! Redux at first can be confusing and quite tricky to set up, but once you get set up it's then much easier to deal with user actions and data changing. The overhead at first pays off hugely :)
+
+### Key Terminology:
+
+- `Actions`, which are user interactions (add todo, delete todo, etc). We create these actions in response to user input.
+- `Reducers`, these take a user action and the current state, and return the new state. They effectively progress the state based on the user's action.
+- `Store`, which is the store that holds all our data
+- `dispatch` - the function you call to dispatch a user action
+
+Additionally, we then have some extra React-Redux terms:
+
+- `connect`, a function used to hook a React component up to the React Redux system. Any component that needs to interact with the store (either to get data, or dispatch actions) must be explicitly connected to it. This is a good thing because you can't accidentally have any random component talking to the store without you first allowing them to.
+- `Provider` this component provided by React-Redux hooks up the store to your app. You typically wrap your most top level component in this component, and that's it.
+
+### Actions
+
+We start by defining our actions in `./actions.js`. In a larger app you would split this into multiple files for different categories of action, but for now we'll leave it in one. We only have one action:
+
+```js
+var actions = {
+  addTodo: function(todo) {
+    return {
+      type: 'ADD_TODO',
+      todo: todo
+    }
+  }
+};
+
+module.exports = actions;
+```
+
+Each action must have a `type` property, and then any other information you need. In our case it's just the text of the todo.
+
+### Reducers
+
+Next let's write the reducer function. This takes the state and an action and returns the new state. It must also deal with no state (eg, defining the initial state):
+
+```js
+var todoReducer = function(state, action) {
+  if (!state) state = { todos: [] };
+
+  switch (action.type) {
+    case 'ADD_TODO': {
+      return Object.assign({}, state, {
+        todos: state.todos.concat([action.todo])
+      });
+    }
+
+    default:
+      return state
+  }
+}
+
+module.exports = todoReducer;
+```
+
+A reducer should __never__ modifiy the state, but always return a new one, hence the use of `Object.assign`.
+
+Now we'll work through our components from the top down. First, `App.js`:
+
+```js
+var React = require('react');
+var ReactDOM = require('react-dom');
+var Redux = require('redux');
+var ReactRedux = require('react-redux');
+var Provider = ReactRedux.Provider;
+var connect = ReactRedux.connect;
+var todoAppReducers = require('./reducers');
+var Header = require('./header');
+var store = Redux.createStore(todoAppReducers);
+
+var App = React.createClass({
+  renderTodos: function() {
+    return this.props.todos.map(function(todo) {
+      return <p key={todo}>{todo}</p>;
+    });
+  },
+
+  render: function() {
+    return (
+      <div>
+        <Header />
+        { this.renderTodos() }
+      </div>
+    );
+  }
+});
+
+var ConnectedApp = connect(function(state) {
+  return {
+    todos: state.todos
+  };
+})(App);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <ConnectedApp />
+  </Provider>,
+  document.getElementById('app')
+)
+```
+
+Note:
+
+- we use `createStore` to create a store, which takes the reducer function as its argument
+- we use the `connect` function to connect our `App` component up to the store. The function we give returns the object of properties from the store that component is allowed. In our case we say that `App` is only allowed access to the `todos` property in the state.
+- we wrap the component in `Provider` when we render, which attaches our React components and the store together so we can `connect` them.
+- We don't have `todos` on the state now, but they are provided to the app as props, so when rendering we use `this.props.todos`.
+- I've also got rid of all the `onCreate` and stuff from the previous example. It's dead :)
+
+Next we can go to `TodoForm`:
+
+```js
+var React = require('react');
+var connect = require('react-redux').connect;
+
+var TodoActions = require('./todo-actions');
+var addTodo = require('./actions').addTodo;
+
+var TodoForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    this.props.dispatch(addTodo(this.refs.todoInput.value));
+  },
+
+  render: function() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" ref="todoInput" />
+        <button type="submit">Create</button>
+      </form>
+    );
+  }
+});
+
+var ConnectedTodoForm = connect()(TodoForm);
+
+module.exports = ConnectedTodoForm;
+```
+
+Notice:
+
+- We connect the `TodoForm` - we need to do this so the `TodoForm` is provided with `this.props.dispatch`, which it uses to dispatch a user action.
+- To dispatch an action we pass it to `this.props.dispatch`, and call the `addTodo` action with the text of the todo.
+- `TodoForm` doesn't know that the store exists at all, which is great!
+
+And with that we have todos being created through Redux!
+
+The pattern is as follows:
+
+1. A component triggers a user action with `this.props.dispatch(...)`.
+2. Redux calls your reducer function with the current state and the user action.
+3. When the reducer returns the new state, Redux updates the props given to the components and in doing so causes React to rerender.
+
+__Exercise__: Add the ability to delete a todo, but this time using Redux. You'll need to:
+- create a new action
+- update the reducer
+- create a new `Todo` component to represent a todo (like we did in exercise 2), and hook it up to the store so it can `dispatch()`.
+- Have a button that dispatches the new action type.
+
+The solution for this exercise is on `middle-3-delete-exercise`.
+
+
+
+
