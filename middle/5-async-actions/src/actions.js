@@ -1,4 +1,11 @@
 var actions = {
+  newActiveUser: function(username) {
+    return {
+      type: 'NEW_ACTIVE_USER',
+      username: username
+    }
+  },
+
   requestGithub: function(username) {
     return {
       type: 'GITHUB_REQUEST',

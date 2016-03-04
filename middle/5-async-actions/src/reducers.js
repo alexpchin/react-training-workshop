@@ -8,6 +8,8 @@ var activeUser = function(state, action) {
   switch (action.type) {
     case 'GITHUB_RESPONSE':
       return action.username;
+    case 'NEW_ACTIVE_USER':
+      return action.username;
     default:
       return state;
   }

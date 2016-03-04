@@ -10,6 +10,7 @@ var connect = ReactRedux.connect;
 
 var githubReducers = require('./reducers');
 var UsernameInput = require('./username-input');
+var UserData = require('./user-data');
 
 var devTools = window.devToolsExtension ? window.devToolsExtension() : function(x) { return x };
 
@@ -27,12 +28,10 @@ var store = Redux.createStore(
 
 var App = React.createClass({
   render: function() {
-    var userObj = this.props.users[this.props.activeUser];
     return (
       <div>
         <UsernameInput />
-        <p>Current user: { this.props.activeUser }</p>
-        { userObj && userObj.data.public_repos }
+        <UserData />
       </div>
     );
   }
