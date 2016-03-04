@@ -873,4 +873,12 @@ var ConnectedApp = connect(function(state) {
 // ReactDOM render left out
 ```
 
-And with that we ca now make requests to GitHub and dispatch actions as expected!
+And with that we can now make requests to GitHub and dispatch actions as expected!
+
+At this point take a deep breath - we've set up a lot and there was a lot to learn there! The good thing is once you've got this set up in your application it's now easy to leave it be and focus on your app - the beauty of Redux is once you have it configured you can usually forget about it.
+
+__Exercise__: the `App` component has got pretty large. Can you pull a `UserData` component out that will render the data from the store for the active user?
+
+__Exercise__: Show a list of all users we've previously fetched information for and allow them to be clicked to update the data being displayed.
+
+The solutions for both of the above are on the `middle-5-solutions` branch.
