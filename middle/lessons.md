@@ -940,7 +940,7 @@ The solutions for both of the above are on the `middle-5-solutions` branch.
 
 ## 6-react-router-intro
 
-To finish off this set of exercises we're going to look at how to set up routing with [React Router](https://github.com/reactjs/react-router), the standard routing solution for ReactJS applications.
+Leaving Redux for now, we're going to look at how to set up routing with [React Router](https://github.com/reactjs/react-router), the standard routing solution for ReactJS applications.
 
 At its core React Router is just a bunch of React components. We create a router with the `Router` component, and routes with the `Route` component. We also have to tell React Router how to manage URLs - whether to use the hashbang approach or HTML 5 pushState API. For now we'll use hashbangs to avoid having to set up a server, but later we'll see how we can avoid that. Let's take a look at a basic app:
 
@@ -968,6 +968,63 @@ ReactDOM.render(
   document.getElementById('app')
 )
 ```
+
+__Exercise__: add another route for the `/about` URL, and a new component that will be rendered on it.
+__Exercise__: explore how you can use React Router's `Link` component to have links between routes. [Here's the docs to get you started](https://github.com/reactjs/react-router/blob/master/docs/API.md#link).
+
+Code for the above two exercises is on the branch `middle-6-solutions`.
+
+## 7-nested-routing
+
+Often we want to have a shared component for all routes that contains common content such as navigation, and so on. We can achieve this with nested routes.
+
+Taking the following components:
+
+```js
+var App = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        { this.props.children }
+      </div>
+    );
+  }
+});
+
+var Home = React.createClass({
+  render: function() {
+    return (
+      <p>Home</p>
+    );
+  }
+});
+
+var About = React.createClass({
+  render: function() {
+    return (
+      <p>About</p>
+    );
+  }
+});
+```
+
+We can render them as follows:
+
+```js
+<Router history={hashHistory}>
+  <Route path="/" component={App}>
+    <IndexRoute component={Home} />
+    <Route path="/about" component={About} />
+  </Route>
+</Router>
+```
+
+- The real power of React Router comes from this ability to nest routes within routes to any level needed.
+- We use the `IndexRoute` when we want to have a route nested within a parent route at the same URL. It's akin to how browsers always look for `index.html`.
+- Note the use of `{this.props.children}` to render the child routes.
+
 
 
 
