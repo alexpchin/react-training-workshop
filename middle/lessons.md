@@ -314,7 +314,6 @@ We then `dispatch` actions and log out the current state. And that's it! That's 
 __Exercise__: add a new action `RESET` that will set the counter back to 0.
 
 
-
 ## 3-redux
 
 Now let's look at using [Redux](http://redux.js.org/index.html)  rather than implementing ourselves.
@@ -938,3 +937,37 @@ __Exercise__: the `App` component has got pretty large. Can you pull a `UserData
 __Exercise__: Show a list of all users we've previously fetched information for and allow them to be clicked to update the data being displayed.
 
 The solutions for both of the above are on the `middle-5-solutions` branch.
+
+## 6-react-router-intro
+
+To finish off this set of exercises we're going to look at how to set up routing with [React Router](https://github.com/reactjs/react-router), the standard routing solution for ReactJS applications.
+
+At its core React Router is just a bunch of React components. We create a router with the `Router` component, and routes with the `Route` component. We also have to tell React Router how to manage URLs - whether to use the hashbang approach or HTML 5 pushState API. For now we'll use hashbangs to avoid having to set up a server, but later we'll see how we can avoid that. Let's take a look at a basic app:
+
+```js
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var hashHistory = ReactRouter.hashHistory;
+
+var App = React.createClass({
+  render: function() {
+    return (
+      <p>Hello World</p>
+    );
+  }
+});
+
+ReactDOM.render(
+  <Router history={hashHistory}>
+    <Route path="/" component={App} />
+  </Router>,
+  document.getElementById('app')
+)
+```
+
+
+
