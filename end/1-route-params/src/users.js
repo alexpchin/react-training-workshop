@@ -7,6 +7,19 @@ var Users = React.createClass({
   componentWillMount: function() {
     this.fetchUser(this.props.params.username);
   },
+  componentWillReceiveProps: function(newProps) {
+    if (!newProps || !newProps.params || !newProps.params.username) {
+      return;
+    }
+
+    var newName = newProps.params.username;
+    var oldName = this.props.params.username;
+
+    if (oldName !== newName) {
+      this.setState({ user: undefined });
+      this.fetchUser(newName);
+    }
+  },
   fetchUser: function(username) {
     fetch('https://api.github.com/users/' + username).then(function(data) {
       return data.json();
