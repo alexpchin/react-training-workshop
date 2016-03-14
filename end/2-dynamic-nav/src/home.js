@@ -10,11 +10,17 @@ var Home = React.createClass({
     };
   },
   onTextChange: function(e) {
-    // update the state with the new text value
+    this.setState({
+      formValue: e.target.value
+    });
   },
   onSubmit: function(e) {
-    // get the value of the form, submit it
-    // and pass it to the router to transition to a new route
+    e.preventDefault();
+    var name = this.state.formValue;
+
+    var path = '/users/' + name;
+
+    this.context.router.push(path);
   },
   render: function() {
     return (
