@@ -1,0 +1,30 @@
+{
+  "name": "testing-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --port=3001 --ignore=src/",
+    "build": "webpack --config webpack.config.dev.js --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.6.5",
+    "babel-loader": "^6.2.4",
+    "react": "^15.0.0-rc.1",
+    "react-dom": "^15.0.0-rc.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.17",
+    "babel-loader": "^6.2.0",
+    "babel-preset-react": "^6.3.13",
+    "babel-tape-runner": "^2.0.0",
+    "jsdom": "^7.2.1",
+    "live-server": "^0.9.0",
+    "react-addons-test-utils": "^15.0.0-rc.1",
+    "tape": "^4.2.2",
+    "webpack": "^1.12.14"
+  }
+}
