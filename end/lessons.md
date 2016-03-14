@@ -92,4 +92,56 @@ We're going to start by writing some tests on our state functions, which we use 
 
 We need a test runner, and whilst there's so many to choose from (Jasmine, Mocha) I prefer [tape](https://github.com/substack/tape), along with [babel-tape-runner](https://github.com/wavded/babel-tape-runner) for running tests that first need to be processed with Babel.
 
+You can find the code for this first set of tests on the branch `3-tests-1`.
 
+First, let's install the test dependencies:
+
+```
+npm install --save-dev tape babel-tape-runner
+```
+
+Now we're running Babel through more than just Webpack, we'll create a `.babelrc` file to configure it.
+
+```js
+{
+  "presets": ["react"]
+}
+```
+
+And the finally add a `test` command that will run any file in the `test` directory that ends in `-test.js`:
+
+```js
+"test": "babel-tape-runner test/**/*-test.js"
+```
+
+You should now be able to run `npm test`, and see that whilst everything runs, there are no tests. Let's write one!
+
+Create `test/state-functions-test.js`.
+
+```js
+var test = require('tape');
+
+var stateFunctions = require('../src/state-functions');
+
+test('toggleDone', function(t) {
+  t.test('it updates the todo with the ID to be done', function(t) {
+    t.plan(1);
+    var state = {
+      todos: [{ id: 1, done: false }]
+    };
+    var newState = stateFunctions.toggleDone(state, 1);
+    t.deepEqual(newState.todos, [
+      { id: 1, done: true }
+    ]);
+  });
+});
+```
+- Note the use of `t.plan` to tell Tape how many assertions to expect
+- `t.deepEqual` is great for comparing objects
+
+__Exercise__: Check out the `3-tests-1` branch and run `npm test`. Note that the test is failing. Why is that, and can you fix it?
+__Exercise__: write another test for `toggleDone` that checks that if you have two todos, _only_ the todo with the matching ID is changed.
+
+We won't write tests for all of the state functions, but if this were a real app I'd definitely recommend it. The key takeaway here is with React you should try to move complex logic out into pure functions that are tested in isolation from React.
+
+### Testing React components
