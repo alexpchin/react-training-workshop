@@ -45,3 +45,36 @@ Note that `componentWillReceiveProps` is called numerous times, so it's always i
 Finally, notice how we style the link when it's active, which is a feature React Router provides out of the box. You can pass an `activeClassName` prop to a `Link` to do this.
 
 However, notice that the index route is active always! This is because each route matches `/`. We can fix this using `IndexLink`, which React Router provides for this exact reason.
+
+## 2-dynamic-nav
+
+(This exercise is taken largely from the [React Router tutorial](https://github.com/reactjs/react-router-tutorial/blob/start/lessons/12-navigating.md)).
+
+We've seen how to use `Link` for routing but hwo can we navigate dynamically? In this lesson you'll let people type in a username into a field and take them to `/users/:username` so they can be shown information on the user from GitHub.
+
+You'll need to write all the code yourself, but first let's discuss how React Router lets you programatically transiton routes.
+
+React has a feature called _context_. This lets you pass data down from parents to children, grandchildren and beyond without manually passing props down the chain. [React docs](https://facebook.github.io/react/docs/context.html).
+
+Note that you should use context sparingly, because it can make it confusing to figure out where data is coming from.
+
+React Router exposes a `router` object onto the context, which we hook into to programatically transition. To access a property on context a child component has to define `contextTypes`, and ask for the right property. In our case that's:
+
+```js
+contextTypes: {
+  router: React.PropTypes.object
+}
+```
+
+Now we have access to `this.context.router` within a component. You can call `this.context.router.push('/foo')` to transition to a new route.
+
+__Exercise__: take the code from `/end/2-dynamic-nav` and update it so it:
+
+1. Allows a user to type a username, hit submit and be taken to the right route
+2. You'll need to update `src/Home` with some fits of functionality to make this happen:
+  - track the input value as it changes
+  - define the `onSubmit` method to use `this.context.router.push` to push the new path.
+
+You can check out `end-2-solutions` to see my solution.
+
+
