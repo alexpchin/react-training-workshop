@@ -78,3 +78,18 @@ __Exercise__: take the code from `/end/2-dynamic-nav` and update it so it:
 You can check out `end-2-solutions` to see my solution.
 
 
+## 3-testing-react
+
+A lot of this content is taken from my [Testing React Applications](http://12devsofxmas.co.uk/2015/12/day-2-testing-react-applications/) blog post.
+
+Typically front end applications can be hard to test; having to fire up browsers and the like to run tests is a pain, and keeping the DOM tidy between tests takes extra effort. Thankfully React is different; we can run many React tests without ever having to actually render components properly. Because React supports being run on the server, we can write NodeJS tests. And when we do need a DOM we can use a Node implementation too.
+
+To start with, run the `end/3-testing-react` application and get familiar with the components and how it works. It's this that we're going to test!
+
+### Testing pure functions
+
+We're going to start by writing some tests on our state functions, which we use in this todo app to manipulate the state. It's basically a cheap version of Redux, but demonstrates an important point: as much as you can you should pull out important logic into JS functions that can be tested independently of React.
+
+We need a test runner, and whilst there's so many to choose from (Jasmine, Mocha) I prefer [tape](https://github.com/substack/tape), along with [babel-tape-runner](https://github.com/wavded/babel-tape-runner) for running tests that first need to be processed with Babel.
+
+
