@@ -92,8 +92,6 @@ We're going to start by writing some tests on our state functions, which we use 
 
 We need a test runner, and whilst there's so many to choose from (Jasmine, Mocha) I prefer [tape](https://github.com/substack/tape), along with [babel-tape-runner](https://github.com/wavded/babel-tape-runner) for running tests that first need to be processed with Babel.
 
-You can find the code for this first set of tests on the branch `3-tests-1`.
-
 First, let's install the test dependencies:
 
 ```
@@ -145,3 +143,5 @@ __Exercise__: write another test for `toggleDone` that checks that if you have t
 We won't write tests for all of the state functions, but if this were a real app I'd definitely recommend it. The key takeaway here is with React you should try to move complex logic out into pure functions that are tested in isolation from React.
 
 ### Testing React components
+
+Moving onto `4-shallow-render`, we'll start to look at how we can test React components but _without_ the need for a DOM.

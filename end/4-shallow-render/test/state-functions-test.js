@@ -10,7 +10,7 @@ test('toggleDone', function(t) {
     };
     var newState = stateFunctions.toggleDone(state, 1);
     t.deepEqual(newState.todos, [
-      { id: 1, done: false }
+      { id: 1, done: true }
     ]);
   });
 });
