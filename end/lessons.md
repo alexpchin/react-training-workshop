@@ -21,3 +21,23 @@ Instead, React Router changes the _properties_ given to the component. Therefore
 When we navigate from `/users/jackfranklin` to `/users/leggetter` the `Users` component will have `componentWillReceiveProps(nextProps)` called. If `this.props.params.username` has changed, we need to refetch the data.
 
 __Exercise__: taking the above into account, fix the application so you can navigate from `/users/jackfranklin` to `/users/leggetter` and have the data change. Solutions are found on `end-1-solutions`.
+
+Solution:
+
+```js
+componentWillReceiveProps: function(newProps) {
+  if (!newProps || !newProps.params || !newProps.params.username) {
+    return;
+  }
+
+  var newName = newProps.params.username;
+  var oldName = this.props.params.username;
+
+  if (oldName !== newName) {
+    this.setState({ user: undefined });
+    this.fetchUser(newName);
+  }
+},
+```
+
+Note that `componentWillReceiveProps` is called numerous times, so it's always important to check you do actually have different data before you trigger a new fetch.
