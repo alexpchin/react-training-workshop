@@ -145,3 +145,89 @@ We won't write tests for all of the state functions, but if this were a real app
 ### Testing React components
 
 Moving onto `4-shallow-render`, we'll start to look at how we can test React components but _without_ the need for a DOM.
+
+We do this by using the React [test utils](https://facebook.github.io/react/docs/test-utils.html) which we can install:
+
+```
+npm install --save-dev react-addons-test-utils
+```
+
+These provide a number of additional functions that make it easy to test React components. One of these functions allows for shallow rendering. As the docs linked to above explain:
+
+> Shallow rendering is an experimental feature that lets you render a component "one level deep" and assert facts about what its render method returns, without worrying about the behavior of child components, which are not instantiated or rendered. This does not require a DOM.
+
+Let's use this to test our `Todo` component.
+
+When you shallow render a component you get back an object representing what would have been rendered. Here's an example:
+
+```js
+{
+  "type": "div",
+  "key": null,
+  "ref": null,
+  "props": {
+    "className": "todo  todo-1",
+    "children": [
+      {
+        "type": "p",
+        "key": null,
+        "ref": null,
+        "props": {
+          "className": "toggle-todo",
+          "children": "Buy Milk"
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "a",
+        "key": null,
+        "ref": null,
+        "props": {
+          "className": "delete-todo",
+          "href": "#",
+          "children": "Delete"
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ]
+  },
+  "_owner": null,
+  "_store": {}
+}
+```
+
+We can then make assertions on that. Here's our first test:
+
+```js
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
+var test = require('tape');
+
+var Todo = require('../src/todo');
+
+function shallowRenderTodo(todo) {
+  var fn = function() {};
+
+  const renderer = TestUtils.createRenderer();
+  renderer.render(<Todo todo={todo} deleteTodo={fn} doneChange={fn} />);
+  return renderer.getRenderOutput();
+}
+
+test('Todo component', function(t) {
+  t.test('rendering a not-done tweet', function(t) {
+    var todo = { id: 1, name: 'Buy Milk', done: false };
+    var result = shallowRenderTodo(todo);
+
+    t.test('It renders the text of the todo', function(t) {
+      t.plan(1);
+      t.equal(result.props.children[0].props.children, 'Buy Milk');
+    });
+  });
+});
+```
+
+__Exercise__: write another test for the todo component:
+- When a todo is done, it should have the class `done-todo` applied to the rendered `div` element
+- When a todo is not done, it should not have the class `done-todo` applied to the rendered `div` element
