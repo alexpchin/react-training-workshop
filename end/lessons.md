@@ -231,3 +231,5 @@ test('Todo component', function(t) {
 __Exercise__: write another test for the todo component:
 - When a todo is done, it should have the class `done-todo` applied to the rendered `div` element
 - When a todo is not done, it should not have the class `done-todo` applied to the rendered `div` element
+
+The tests for the above exercise are on the branch `end-4-solutions`.
