@@ -22,7 +22,6 @@
     "babel-loader": "^6.2.0",
     "babel-preset-react": "^6.3.13",
     "babel-tape-runner": "^2.0.1",
-    "jsdom": "^7.2.2",
     "live-server": "^0.9.0",
     "react-addons-test-utils": "^15.0.0-rc.1",
     "tape": "^4.5.1",

@@ -1,5 +1,3 @@
-require('./setup');
-
 var React = require('react');
 var TestUtils = require('react-addons-test-utils');
 var test = require('tape');
@@ -38,18 +36,5 @@ test('Todo component', function(t) {
       t.plan(1);
       t.ok(result.props.className.indexOf('done-todo') > -1);
     });
-  });
-
-  t.test('toggling a TODO calls the given function', function(t) {
-    t.plan(1);
-    var doneCallback = function(id) { t.equal(id, 1) };
-    var todo = { id: 1, name: 'Buy Milk', done: false };
-
-    var result = TestUtils.renderIntoDocument(
-      <Todo todo={todo} doneChange={doneCallback} deleteTodo={function() {}} />
-    );
-
-    var todoText = TestUtils.findRenderedDOMComponentWithTag(result, 'p');
-    TestUtils.Simulate.click(todoText);
   });
 });
