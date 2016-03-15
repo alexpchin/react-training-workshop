@@ -2,7 +2,7 @@
  * Runs the below command in each example app (useful for upgrading the version of React used)
  */
 
-var COMMAND = 'npm install --save react@15.0.0-rc.1 react-dom@15.0.0-rc.1';
+var COMMAND = 'npm install --save-dev live-server';
 
 var fs = require('fs');
 var path = require('path');
@@ -21,7 +21,7 @@ function runCommand(directory) {
   });
 }
 
-var targetDirectories = ['beginning', 'middle'];
+var targetDirectories = ['beginning', 'middle', 'end'];
 
 targetDirectories.forEach(function(directory) {
   // special case: beginning directory is not nested
