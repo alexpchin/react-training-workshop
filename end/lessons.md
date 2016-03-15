@@ -233,3 +233,92 @@ __Exercise__: write another test for the todo component:
 - When a todo is not done, it should not have the class `done-todo` applied to the rendered `div` element
 
 The tests for the above exercise are on the branch `end-4-solutions`.
+
+## 5-dom-testing
+
+Sometimes though we have no choice but to fire up the DOM and write tests that interact with it. In React world we do this to test interactions such as button clicks, and users typing into forms.
+
+Thankfully though we can use [jsdom](https://github.com/tmpvar/jsdom), a library that implements the DOM and HTML APIs for use in NodeJS. This is great for running tests in Node without having to fire up browsers.
+
+First, we install it:
+
+```
+npm install --save-dev jsdom
+```
+
+Then we create `test/setup.js`:
+
+```js
+var jsdom = require('jsdom');
+
+function setupDom() {
+  if (typeof document !== 'undefined') {
+    return;
+  }
+
+  global.document = jsdom.jsdom('<html><body></body></html>');
+  global.window = document.defaultView;
+  global.navigator = window.navigator;
+}
+
+setupDom();
+```
+
+This file, when required, will set up the DOM using JSDom. All we need to do now is import it. Note that this __MUST__ be imported _before_ React.
+
+Let's write a new `Todo` test that tests we can toggle a todo from not done to done by clicking on it.
+
+```js
+t.test('toggling a TODO calls the given function', function(t) {
+  t.plan(1);
+  var doneCallback = function(id) { t.equal(id, 1) };
+  var todo = { id: 1, name: 'Buy Milk', done: false };
+
+  var result = TestUtils.renderIntoDocument(
+    <Todo todo={todo} doneChange={doneCallback} deleteTodo={function() {}} />
+  );
+
+  var todoText = TestUtils.findRenderedDOMComponentWithTag(result, 'p');
+  TestUtils.Simulate.click(todoText);
+});
+```
+
+This test works by telling Tape we expect one assertion, and then calling that assertion in the `doneCallback` function that a `Todo` component expects to be given. If the `doneCallback` isn't called, Tape will time out and our test will fail.
+
+__Exercise__: check out `3-tests-1` and write a test like the above for testing being able to __delete__ a todo.
+
+### Adding a Todo
+
+Let's now look at adding a todo.
+
+```js
+require('./setup');
+
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
+var test = require('tape');
+
+var AddTodo = require('../src/add-todo');
+
+test('Add Todo component', function(t) {
+  t.test('it calls the given callback prop with the new text from the form', function(t) {
+    t.plan(1);
+
+    var todoCallback = function(todo) {
+      t.equal(todo.name, 'Buy Milk');
+    };
+
+    var form = TestUtils.renderIntoDocument(
+      <AddTodo onNewTodo={todoCallback} />
+    );
+
+    var input = TestUtils.findRenderedDOMComponentWithTag(form, 'input');
+    input.value = 'Buy Milk';
+
+    var button = TestUtils.findRenderedDOMComponentWithTag(form, 'button');
+    TestUtils.Simulate.click(button);
+  });
+});
+```
+
+__Exercise__: check out the `3-tests-2` branch and write a new test. This test should check that once the button is clicked, the input box is cleared. Find the solution in `3-tests-2-solution`.
