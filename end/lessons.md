@@ -285,7 +285,7 @@ t.test('toggling a TODO calls the given function', function(t) {
 
 This test works by telling Tape we expect one assertion, and then calling that assertion in the `doneCallback` function that a `Todo` component expects to be given. If the `doneCallback` isn't called, Tape will time out and our test will fail.
 
-__Exercise__: check out `3-tests-1` and write a test like the above for testing being able to __delete__ a todo.
+__Exercise__: check out `end-5-tests-1` and write a test like the above for testing being able to __delete__ a todo.
 
 ### Adding a Todo
 
@@ -321,4 +321,4 @@ test('Add Todo component', function(t) {
 });
 ```
 
-__Exercise__: check out the `3-tests-2` branch and write a new test. This test should check that once the button is clicked, the input box is cleared. Find the solution in `3-tests-2-solution`.
+__Exercise__: check out the `end-5-tests-2` branch and write a new test. This test should check that once the button is clicked, the input box is cleared.
