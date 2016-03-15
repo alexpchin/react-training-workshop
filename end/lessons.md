@@ -322,3 +322,7 @@ test('Add Todo component', function(t) {
 ```
 
 __Exercise__: check out the `end-5-tests-2` branch and write a new test. This test should check that once the button is clicked, the input box is cleared.
+
+
+
+TODO: the branches have got messed up. Need to fix end-5-tests-1 and end-5-tests-2 and 3-tests-1 and 3-tests-2
