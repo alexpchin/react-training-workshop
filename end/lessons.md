@@ -323,6 +323,44 @@ test('Add Todo component', function(t) {
 
 __Exercise__: check out the `end-5-tests-2` branch and write a new test. This test should check that once the button is clicked, the input box is cleared.
 
+## Aside: Tape output
 
+You might have noticed that the Tape output isn't exactly the most friendly to look at:
 
-TODO: the branches have got messed up. Need to fix end-5-tests-1 and end-5-tests-2
+```
+TAP version 13
+# toggleDone
+# it updates the todo with the ID to be done
+ok 1 should be equivalent
+# Todo component
+# rendering a not-done tweet
+# It renders the text of the todo
+ok 2 should be equal
+# it does not include the done-todo class
+ok 3 should be equal
+# rendering a done tweet
+# It includes the done-todo class
+ok 4 (unnamed assert)
+
+1..4
+# tests 4
+# pass  4
+
+# ok
+```
+
+This is because the output is in TAP format - the Test Anything Protocol which is not designed for humans to read but other programs. What this means though is that people have built nice test outputters for Tape.
+
+One of my preffered choices is [faucet](https://github.com/substack/faucet). Install it with:
+
+```
+npm install --save-dev faucet
+```
+
+And update the test command in `package.json`:
+
+```js
+"test": "babel-tape-runner test/**/*-test.js | faucet"
+```
+
+__Exercise__: take a look at [this list](https://github.com/substack/tape#pretty-reporters) of Tape reporters and try setting up the one that you like best.
