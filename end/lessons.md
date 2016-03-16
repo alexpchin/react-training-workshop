@@ -417,3 +417,7 @@ Here, `scryRenderedDOMComponentsWithClass` looks for all elements with a particu
 ([Wikipedia](https://en.m.wikipedia.org/wiki/Scrying))
 
 __Exercise__: check out `6-end-tests-1`. Can you write a test for the `Todos` component that checks we can add a todo? It should simulate the user filling in the field, clicking the button and then check that a fourth todo item is rendered.
+
+### Testing in browser
+
+Using a combination of Browserify, Babelify and Tape Run we can run our tests in the browser too. Check out `end-6-tests-browser`, `npm install` and try it for yourself.
