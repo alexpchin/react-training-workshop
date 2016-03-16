@@ -511,5 +511,4 @@ The functional requirements are:
 
 - The ability to navigate to a single issue.
 - The ability to create a new issue (and provide a title, longer form content and a user ID).
-- The ability to view all active users on the system.
 
