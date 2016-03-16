@@ -364,3 +364,56 @@ And update the test command in `package.json`:
 ```
 
 __Exercise__: take a look at [this list](https://github.com/substack/tape#pretty-reporters) of Tape reporters and try setting up the one that you like best.
+
+## 6-more-testing
+
+For our penultimate look at testing React components, let's take a look at the Todos component generally. This component is pretty large and encapsulates our entire application, so it's quite a good place for some higher level tests that test we render Todos, render a new todo when one is added, and so on. The number of tests of this nature that you write depends on your personal preference to testing, but I at least like to have a couple that validate at a high level that my components are all slotting together nicely.
+
+Our first test in the new `test/todos-component-test.js` will test that we render the correct number of components to the DOM. I've hardcoded the state to have three items, so we test that 3 children are rendered. Note here that I use shallow rendering - you should always aim for this when possible.
+
+```js
+var React = require('react');
+var TestUtils = require('react-addons-test-utils');
+var test = require('tape');
+
+var Todos = require('../src/todos');
+
+function shallowRender() {
+  const renderer = TestUtils.createRenderer();
+  renderer.render(<Todos />);
+  return renderer.getRenderOutput();
+}
+
+test('Todos component', function(t) {
+  t.test('it renders a list of Todos', function(t) {
+    t.plan(1);
+    var result = shallowRender();
+    const todoChildren = result.props.children[2].props.children;
+    t.equal(todoChildren.length, 3);
+  });
+});
+```
+
+Now we can test the slightly more complicated behaviour: deleting a TODO.
+
+Earlier in another test we tested that in the `Todo` component when we click it calls the callback, but it's nice to have a test here that confirms that our components are wired together completely.
+
+```js
+t.test('Deleting a todo', function(t) {
+  t.plan(1);
+  var result = TestUtils.renderIntoDocument(<Todos />);
+  var firstDelete = TestUtils.scryRenderedDOMComponentsWithClass(result, 'delete-todo')[0];
+  TestUtils.Simulate.click(firstDelete);
+
+  var todos = TestUtils.scryRenderedDOMComponentsWithClass(result, 'todo');
+  t.equal(todos.length, 2);
+});
+```
+
+Here, `scryRenderedDOMComponentsWithClass` looks for all elements with a particular class and returns an array. Wondering why it's called `scry` ?
+
+> Scrying (also called seeing or peeping) is the practice of looking into a translucent ball
+
+([Wikipedia](https://en.m.wikipedia.org/wiki/Scrying))
+
+__Exercise__: check out `6-end-tests-1`. Can you write a test for the `Todos` component that checks we can add a todo? It should simulate the user filling in the field, clicking the button and then check that a fourth todo item is rendered.
