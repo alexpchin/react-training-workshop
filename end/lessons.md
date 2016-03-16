@@ -289,7 +289,7 @@ __Exercise__: check out `end-5-tests-1` and write a test like the above for test
 
 ### Adding a Todo
 
-Let's now look at adding a todo.
+Let's now look at adding a todo in `test/add-todo-component-test.js`:
 
 ```js
 require('./setup');
