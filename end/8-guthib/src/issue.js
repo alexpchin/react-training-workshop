@@ -3,6 +3,9 @@ var connect = require('react-redux').connect;
 var actions = require('./actions');
 
 var Issue = React.createClass({
+  propTypes: {
+    issue: React.PropTypes.object.isRequired
+  },
   renderIssue: function(issue) {
     return (
       <div>

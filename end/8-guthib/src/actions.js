@@ -1,13 +1,6 @@
 var actions = {
   fetchIssues: function() {
-    return function(dispatch, getState) {
-      var issues = getState().issues;
-
-      // if we already have issues in the state, no need to do anything
-      if (Object.keys(issues).length > 0) {
-        return;
-      }
-
+    return function(dispatch) {
       dispatch(actions.requestIssues());
 
       return fetch('http://localhost:3002/issues')
@@ -19,6 +12,9 @@ var actions = {
     }
   },
   requestIssues: function() {
+    // although we're not doing so in this app
+    // you would probably act upon this by updating the state with loading: true
+    // and show a spinner or something similar
     return {
       type: 'REQUEST_ISSUES'
     }

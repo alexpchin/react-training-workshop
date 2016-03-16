@@ -4,6 +4,10 @@ var connect = require('react-redux').connect;
 var actions = require('./actions');
 
 var Issues = React.createClass({
+  propTypes: {
+    issues: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    dispatch: React.PropTypes.func.isRequired
+  },
   componentDidMount: function() {
     this.props.dispatch(actions.fetchIssues());
   },
