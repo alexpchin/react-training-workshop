@@ -15,9 +15,7 @@ var issues = function(state, action) {
 
   switch (action.type) {
     case 'RECEIVE_ISSUES':
-      return Object.assign({}, state, {
-        issues: action.issues
-      });
+      return action.issues;
 
     default:
       return state
