@@ -509,6 +509,8 @@ They have provided you with a skeleton though. `end/8-guthib` should provide eno
 
 The functional requirements are:
 
-- The ability to navigate to a single issue.
+- The ability to navigate to a single issue (this is nearly done for you in the starting app).
 - The ability to create a new issue (and provide a title, longer form content and a user ID).
+
+Study the application and how it's structured before diving in. Think about the component you'll need to create for adding an issue, and what actions you'll need to dispatch.
 
