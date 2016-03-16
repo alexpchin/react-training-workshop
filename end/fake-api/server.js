@@ -6,6 +6,7 @@ var app = express();
 
 var db = require('./database');
 
+app.use(require('cors')());
 app.use(bodyParser.json())
 
 app.get('/users', function(req, res) {
