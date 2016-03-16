@@ -421,3 +421,78 @@ __Exercise__: check out `6-end-tests-1`. Can you write a test for the `Todos` co
 ### Testing in browser
 
 Using a combination of Browserify, Babelify and Tape Run we can run our tests in the browser too. Check out `end-6-tests-browser`, `npm install` and try it for yourself.
+
+## 7-enzyme
+
+Finally for our testing adventures we're going to quickly look at how [Enzyme](https://github.com/airbnb/enzyme) can make testing React components much easier.
+
+```
+npm install --save-dev enzyme
+```
+
+Enzyme helps both with shallow rendered tests and DOM tests. Let's rewrite some of our shallow rendered `Todo` tests using Enzyme.
+
+```js
+require('./setup');
+
+var React = require('react');
+var enzyme = require('enzyme');
+var TestUtils = require('react-addons-test-utils');
+var test = require('tape');
+
+var Todo = require('../src/todo');
+
+function shallowRenderTodo(todo) {
+  var fn = function() {};
+  return enzyme.shallow(<Todo todo={todo} deleteTodo={fn} doneChange={fn} />);
+}
+
+test('Todo component', function(t) {
+  t.test('rendering a not-done tweet', function(t) {
+    var todo = { id: 1, name: 'Buy Milk', done: false };
+    var result = shallowRenderTodo(todo);
+
+    t.test('It renders the text of the todo', function(t) {
+      t.plan(1);
+      t.equal(result.find('p').text(), 'Buy Milk');
+    });
+
+    t.test('it does not include the done-todo class', function(t) {
+      t.plan(1);
+      t.equal(result.hasClass('done-todo'), false);
+    });
+  });
+
+  t.test('rendering a done tweet', function(t) {
+    var todo = { id: 1, name: 'Buy Milk', done: true };
+    var result = shallowRenderTodo(todo);
+
+    t.test('It includes the done-todo class', function(t) {
+      t.plan(1);
+      t.ok(result.hasClass('done-todo'));
+    });
+  });
+
+  ... more tests
+```
+
+Note how Enzyme tidies up the shallow rendering function and provides nice helper calls to check the shallow rendered result; this is much nicer than navigating the data structure that is given to us by the React Test Utils.
+
+Now let's see how Enzyme deals with tests that use the DOM, using `enzyme.mount`.
+
+```js
+t.test('toggling a TODO calls the given function', function(t) {
+  t.plan(1);
+  var doneCallback = function(id) { t.equal(id, 1) };
+  var todo = { id: 1, name: 'Buy Milk', done: false };
+
+  var result = enzyme.mount(
+    <Todo todo={todo} doneChange={doneCallback} deleteTodo={function() {}} />
+  );
+
+  result.find('p').simulate('click');
+});
+```
+
+__Exercise__: check out `end-7-tests-1` and rewrite some of our `Todos` tests using Enzyme.
+
