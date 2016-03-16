@@ -7,11 +7,21 @@ var Issues = React.createClass({
   componentDidMount: function() {
     this.props.dispatch(actions.fetchIssues());
   },
+  renderIssueLinks: function() {
+    return this.props.issues.map(function(issue) {
+      return (
+        <li key={issue.id}>
+          <Link to={"/issues/" + issue.id}>{issue.title}</Link>
+        </li>
+      );
+    });
+  },
   render: function() {
     return (
       <div className="issues">
-        <p>You could show a list of all the issues here, and then have a link that allows you to go and view an individual issue.</p>
-        <p>Issues: <code>{ JSON.stringify(this.props.issues) }</code></p>
+        <p>All the issues are below</p>
+        <ul>{this.renderIssueLinks()}</ul>
+        { this.props.children }
       </div>
     )
   }
