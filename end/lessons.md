@@ -496,3 +496,14 @@ t.test('toggling a TODO calls the given function', function(t) {
 
 __Exercise__: check out `end-7-tests-1` and rewrite some of our `Todos` tests using Enzyme.
 
+## Putting it all together
+
+For this exercise you're left to your own devices to build an application. You've just been hired by GutHib Ltd to build the next generation issue tracking tool. They've provided you with an API and would like a React frontend. They've been very specific with their requirements though:
+
+- It should use Redux for managing all state and data
+- It should use React Router for routing
+- Ideally if you have time they'd like at least a couple of tests
+- They also don't care _at all_ about the design or how it looks.
+
+They have provided you with a skeleton though. `end/8-guthib` should provide enough for you to get started with.
+
