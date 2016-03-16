@@ -1,6 +1,13 @@
 var actions = {
   fetchIssues: function() {
-    return function(dispatch) {
+    return function(dispatch, getState) {
+      var issues = getState().issues;
+
+      // if we already have issues in the state, no need to do anything
+      if (Object.keys(issues).length > 0) {
+        return;
+      }
+
       dispatch(actions.requestIssues());
 
       return fetch('http://localhost:3002/issues')

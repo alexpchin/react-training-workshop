@@ -50,7 +50,7 @@ ReactDOM.render(
     <Router history={hashHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={Index} />
-        <Route path="/issues" component={Issues}>
+        <Route path="issues" component={Issues}>
           <Route path=":id" component={Issue} />
         </Route>
       </Route>
