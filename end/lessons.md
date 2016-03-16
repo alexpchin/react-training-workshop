@@ -505,5 +505,11 @@ For this exercise you're left to your own devices to build an application. You'v
 - Ideally if you have time they'd like at least a couple of tests
 - They also don't care _at all_ about the design or how it looks.
 
-They have provided you with a skeleton though. `end/8-guthib` should provide enough for you to get started with.
+They have provided you with a skeleton though. `end/8-guthib` should provide enough for you to get started with. It's got Redux, Redux Thunk and React Router all configured.
+
+The functional requirements are:
+
+- The ability to navigate to a single issue.
+- The ability to create a new issue (and provide a title, longer form content and a user ID).
+- The ability to view all active users on the system.
 
