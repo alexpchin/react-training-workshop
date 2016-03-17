@@ -558,5 +558,11 @@ And then update the `.babelrc` (if you have one) and webpack config.
 
 __Exercise__: go through some of the code in `9-es2015` and update it to run some ES2015. You'll need to install the preset and configure Babel too.
 
+##10-universal-react
+
+This example shows how we might run React & React Router on the server.
+
+__Exercise__: Add another route to the server side app.
+
 
 
