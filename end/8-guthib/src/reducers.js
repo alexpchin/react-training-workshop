@@ -17,6 +17,9 @@ var issues = function(state, action) {
     case 'RECEIVE_ISSUES':
       return action.issues;
 
+    case 'RECEIVE_ISSUE':
+      return state.concat([action.issue]);
+
     default:
       return state
   }

@@ -8,8 +8,12 @@ var Issue = React.createClass({
   },
   renderIssue: function(issue) {
     return (
-      <div>
+      <div className="issue">
         <h2>{issue.title}</h2>
+        <div>
+          <p>{ issue.content }</p>
+        </div>
+        <p>User Id: { issue.userId }</p>
       </div>
     );
   },

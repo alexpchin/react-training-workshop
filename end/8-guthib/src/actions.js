@@ -6,7 +6,6 @@ var actions = {
       return fetch('http://localhost:3002/issues')
         .then(function(r) { return r.json() })
         .then(function(issues) {
-          console.log('got issues', issues);
           dispatch(actions.receiveIssues(issues));
         });
     }
@@ -23,6 +22,32 @@ var actions = {
     return {
       type: 'RECEIVE_ISSUES',
       issues: issues
+    }
+  },
+  createNewIssue: function(title, content, userId) {
+    return function(dispatch) {
+      return fetch('http://localhost:3002/issues', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          userId: userId
+        })
+      }).then(function(r) {
+        return r.json();
+      }).then(function(newIssue) {
+        dispatch(actions.newIssue(newIssue));
+      });
+    }
+  },
+  newIssue: function(issue) {
+    return {
+      type: 'RECEIVE_ISSUE',
+      issue: issue
     }
   }
 };

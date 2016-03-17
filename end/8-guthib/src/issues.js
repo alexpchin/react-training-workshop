@@ -3,6 +3,8 @@ var Link = require('react-router').Link;
 var connect = require('react-redux').connect;
 var actions = require('./actions');
 
+var NewIssue = require('./new-issue');
+
 var Issues = React.createClass({
   propTypes: {
     issues: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
@@ -23,6 +25,7 @@ var Issues = React.createClass({
   render: function() {
     return (
       <div className="issues">
+        <NewIssue />
         <p>All the issues are below</p>
         <ul>{this.renderIssueLinks()}</ul>
         { this.props.children }

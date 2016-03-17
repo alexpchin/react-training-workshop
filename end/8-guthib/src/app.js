@@ -39,6 +39,7 @@ var App = React.createClass({
           <li><IndexLink activeClassName="active" to="/">Home</IndexLink></li>
           <li><IndexLink activeClassName="active" to="/issues">All Issues</IndexLink></li>
         </ul>
+        <hr />
         <div className="main">{ this.props.children }</div>
       </div>
     );
