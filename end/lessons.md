@@ -498,19 +498,20 @@ __Exercise__: check out `end-7-tests-1` and rewrite some of our `Todos` tests us
 
 ## Putting it all together
 
-For this exercise you're left to your own devices to build an application. You've just been hired by GutHib Ltd to build the next generation issue tracking tool. They've provided you with an API and would like a React frontend. They've been very specific with their requirements though:
+You've just been hired by GutHib Ltd to build the next generation issue tracking tool. They've provided you with an API and would like a React frontend. They've been very specific with their requirements though:
 
 - It should use Redux for managing all state and data
 - It should use React Router for routing
 - Ideally if you have time they'd like at least a couple of tests
 - They also don't care _at all_ about the design or how it looks.
 
-They have provided you with a skeleton though. `end/8-guthib` should provide enough for you to get started with. It's got Redux, Redux Thunk and React Router all configured.
+You've taken over from another developer who thankfully did a decent job so far and has set up React, Redux and Redux Thunk.
 
 The functional requirements are:
 
 - The ability to navigate to a single issue (this is nearly done for you in the starting app).
 - The ability to create a new issue (and provide a title, longer form content and a user ID).
+- (Bonus): the ability to select a user from a dropdown when creating an issue, rather than just typing the user ID into the form.
 
 Study the application and how it's structured before diving in. Think about the component you'll need to create for adding an issue, and what actions you'll need to dispatch.
 
