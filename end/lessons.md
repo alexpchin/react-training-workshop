@@ -536,3 +536,27 @@ return fetch('http://localhost:3002/issues', {
 });
 ```
 
+##9-es2015
+
+Now we're going to look at how some of the features of ES2015 can make our code clearer. To set it up we just need to add the ES2015 Babel preset and then Babel will start transpiling ES2015 for us.
+
+First we just need to install the ES2015 preset:
+
+```
+npm install --save-dev babel-preset-es2015
+```
+
+And then update the `.babelrc` (if you have one) and webpack config.
+
+- Firstly, we can use the ES2015 module syntax to dramatically reduce and tidy up imports.
+- We can swap `var` out for `const` when we don't need to modify a value again.
+- We can also take advantage of object literal syntax improvements, which change `render: function() {` into simply `render() {` within an object literal.
+- We can use ES2015 syntax for exporting too
+- We can swap to the class version of React components (`src/issue.js` on the `end-9-solutions` branch)
+- We can use arrow functions to reduce the amount of boilerplate
+- Be careful with the binding of methods - this happens automatically in `React.createClass` but not in ES2015 classes.
+
+__Exercise__: go through some of the code in `9-es2015` and update it to run some ES2015. You'll need to install the preset and configure Babel too.
+
+
+
