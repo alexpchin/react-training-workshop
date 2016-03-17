@@ -515,3 +515,24 @@ The functional requirements are:
 
 Study the application and how it's structured before diving in. Think about the component you'll need to create for adding an issue, and what actions you'll need to dispatch.
 
+Tip: here's how you POST some JSON using the `fetch` API:
+
+```js
+return fetch('http://localhost:3002/issues', {
+  method: 'post',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    title: title,
+    content: content,
+    userId: userId
+  })
+}).then(function(r) {
+  return r.json();
+}).then(function(newIssue) {
+  // newIssue is the new issue from the API
+});
+```
+
