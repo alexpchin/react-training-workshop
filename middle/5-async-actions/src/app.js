@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Redux = require('redux');
-var thunkMiddleware = require('redux-thunk');
+var thunkMiddleware = require('redux-thunk').default;
 
 var ReactRedux = require('react-redux');
 var Provider = ReactRedux.Provider;

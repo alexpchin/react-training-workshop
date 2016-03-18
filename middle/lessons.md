@@ -891,6 +891,7 @@ module.exports = ConnectedInput;
 And then we can update `App` to render some of this data:
 
 ```js
+var thunkMiddleware = require('redux-thunk').default;
 // requires left out
 var devTools = window.devToolsExtension ? window.devToolsExtension() : function(x) { return x };
 
