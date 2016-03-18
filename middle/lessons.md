@@ -937,6 +937,11 @@ __Exercise__: the `App` component has got pretty large. Can you pull a `UserData
 
 __Exercise__: Show a list of all users we've previously fetched information for and allow them to be clicked to update the data being displayed.
 
+You'll need to:
+- create an action that is dispatched when the user clicks on a new username to become active
+- update the reducer to set `activeUser` when the new action is dispatched
+- create a new component that renders a list of all users and allows them to be clicked on, dispatching the new action and hence making them active
+
 The solutions for both of the above are on the `middle-5-solutions` branch.
 
 ## 6-react-router-intro
