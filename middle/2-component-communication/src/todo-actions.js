@@ -1,8 +1,6 @@
-var TodoStore = require('./todo-store');
-
 var TodoActions = {
   addTodo: function(todo) {
-    TodoStore.addTodo(todo);
+    // do something here to persist our new todo
   }
 };
 

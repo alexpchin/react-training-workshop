@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Redux = require('redux');
+// this is because redux-thunk ships as ES2015 module by default
 var thunkMiddleware = require('redux-thunk').default;
 
 var ReactRedux = require('react-redux');
@@ -15,24 +16,14 @@ var devTools = window.devToolsExtension ? window.devToolsExtension() : function(
 
 
 var store = Redux.createStore(
-  githubReducers,
-  {},
-  Redux.compose(
-    Redux.applyMiddleware(
-      thunkMiddleware
-    ),
-    devTools
-  )
+  githubReducers
 );
 
 var App = React.createClass({
   render: function() {
-    var userObj = this.props.users[this.props.activeUser];
     return (
       <div>
         <UsernameInput />
-        <p>Current user: { this.props.activeUser }</p>
-        { userObj && userObj.data.public_repos }
       </div>
     );
   }

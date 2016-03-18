@@ -241,6 +241,7 @@ var App = React.createClass({
     return (
       <div>
         <Header />
+        <TodoForm />
         { this.renderTodos() }
       </div>
     );
@@ -690,7 +691,7 @@ var todoReducer = combineReducers({
 
 Here we map each key in our `state` object to a reducer that is responsible for dealing with just that part of the state. This is a cleaner separation of concerns, and much nicer to work with.
 
-__Exercise__: add a button to let me log out when I'm logged in. It should only appear when the user is logged in.
+__Exercise__: add a button to let me log out when I'm logged in. It should only appear when the user is logged in. Add the appropriate new action and update the `user` reducer.
 
 ## 5-async-actions
 
@@ -699,8 +700,6 @@ So far we've only dealt with actions that are synchronous. Normally though we wi
 This part of the guide is heavily inspired by the [async actions](http://redux.js.org/docs/advanced/AsyncActions.html) part of the Redux docs.
 
 Let's build an app that gets some data from the GitHub API for a specific user. We'll need a text box first to get the username we want to fetch data for. We'll use Redux to store a list of all the users that we have fetched and store them in state.
-
-If you're following along here, you will want to check out `middle-5-starter-branch` for the starting point.
 
 When we have an async action we need to have multiple events for them:
 
@@ -859,7 +858,7 @@ var store = Redux.createStore(
 
 Our store creation is now a little more complex; now we need to pass middleware into `createStore`, we also have to pass the second argument to set the initial state of the store, which will be an empty object. We then apply the middleware and add on the dev tool extension too, which we merge into one function using `Redux.compose` ([docs](http://redux.js.org/docs/api/compose.html).
 
-Finally, we can now write the code to start getting this running! Let's make the button create a `fetchUser` action with the username from the text input:
+Finally, we can now write the code to start getting this running! Let's make the button create a `fetchUser` action with the username from the text input in `username-input.js`.
 
 
 ```js
@@ -948,6 +947,10 @@ The solutions for both of the above are on the `middle-5-solutions` branch.
 
 Leaving Redux for now, we're going to look at how to set up routing with [React Router](https://github.com/reactjs/react-router), the standard routing solution for ReactJS applications.
 
+```
+npm install --save react-router
+```
+
 At its core React Router is just a bunch of React components. We create a router with the `Router` component, and routes with the `Route` component. We also have to tell React Router how to manage URLs - whether to use the hashbang approach or HTML 5 pushState API. For now we'll use hashbangs to avoid having to set up a server, but later we'll see how we can avoid that. Let's take a look at a basic app:
 
 ```js
@@ -1030,6 +1033,8 @@ We can render them as follows:
 - The real power of React Router comes from this ability to nest routes within routes to any level needed.
 - We use the `IndexRoute` when we want to have a route nested within a parent route at the same URL. It's akin to how browsers always look for `index.html`.
 - Note the use of `{this.props.children}` to render the child routes.
+
+__Exercise__: can you nest further? Create some more routes: `/about/foo` and `/about/bar` and have some different content on each.
 
 
 

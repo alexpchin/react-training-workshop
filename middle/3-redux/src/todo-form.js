@@ -6,7 +6,6 @@ var addTodo = require('./actions').addTodo;
 var TodoForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    this.props.dispatch(addTodo(this.refs.todoInput.value));
   },
 
   render: function() {
@@ -19,6 +18,7 @@ var TodoForm = React.createClass({
   }
 });
 
-var ConnectedTodoForm = connect()(TodoForm);
+// TODO: connect the TodoForm
+// var ConnectedTodoForm = ??
 
-module.exports = ConnectedTodoForm;
+module.exports = TodoForm;

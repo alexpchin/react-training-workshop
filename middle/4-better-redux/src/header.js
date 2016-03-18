@@ -7,7 +7,7 @@ var logIn = require('./actions').logIn;
 var Header = React.createClass({
 
   logInClick: function() {
-    this.props.dispatch(logIn('jack'));
+    // todo
   },
 
   renderLoggedInBanner(username) {
@@ -19,12 +19,8 @@ var Header = React.createClass({
   },
 
   render: function() {
-    var user = this.props.user;
-
     return (
       <div>
-        { user.username && this.renderLoggedInBanner(user.username) }
-        { !user.username && this.renderLogInButton() }
         <p>Totally awesome todo app</p>
         <TodoForm />
       </div>

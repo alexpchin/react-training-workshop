@@ -15,8 +15,6 @@
     "webpack": "^1.12.14"
   },
   "scripts": {
-    "start": "live-server --port=3001 --ignore=src/",
-    "build": "webpack --config webpack.config.dev.js --watch"
   },
   "keywords": [],
   "author": "",

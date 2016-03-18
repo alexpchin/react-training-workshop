@@ -1,10 +1,9 @@
 var React = require('react');
-var TodoActions = require('./todo-actions');
 
 var TodoForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    TodoActions.addTodo(this.refs.todoInput.value);
+    // what to do?
   },
 
   render: function() {

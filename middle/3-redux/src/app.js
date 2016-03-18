@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// all the Redux related requires
 var Redux = require('redux');
 var ReactRedux = require('react-redux');
 var Provider = ReactRedux.Provider;
@@ -10,6 +11,7 @@ var todoAppReducers = require('./reducers');
 
 var Header = require('./header');
 
+// create the react store
 var store = Redux.createStore(todoAppReducers);
 
 var App = React.createClass({
@@ -29,15 +31,9 @@ var App = React.createClass({
   }
 });
 
-var ConnectedApp = connect(function(state) {
-  return {
-    todos: state.todos
-  };
-})(App);
+// TODO: connect the app and render it, wrapped in Provider
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ConnectedApp />
-  </Provider>,
+  <App />,
   document.getElementById('app')
 )

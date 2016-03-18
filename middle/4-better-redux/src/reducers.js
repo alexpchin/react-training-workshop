@@ -1,34 +1,24 @@
-var combineReducers = require('redux').combineReducers;
-
-var todos = function(state, action) {
-  if (!state) state = [];
+var todoReducer = function(state, action) {
+  if (!state) state = { todos: [] };
 
   switch (action.type) {
     case 'ADD_TODO': {
-      return state.concat([action.todo]);
+      return Object.assign({}, state, {
+        todos: state.todos.concat([action.todo])
+      });
     }
 
-    default:
-      return state;
-  }
-}
-
-var user = function(state, action) {
-  if (!state) state = {};
-
-  switch (action.type) {
-    case 'USER_LOGIN': {
-      return { username: action.username }
+    case 'DELETE_TODO': {
+      return Object.assign({}, state, {
+        todos: state.todos.filter(function(todo) {
+          return todo !== action.todo;
+        })
+      });
     }
 
     default:
       return state
   }
 }
-
-var todoReducer = combineReducers({
-  todos: todos,
-  user: user
-});
 
 module.exports = todoReducer;
