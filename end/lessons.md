@@ -16,7 +16,7 @@ componentWillMount: function() {
 
 However, React Router tries to avoid unmounting components and remounting them because it's expensive. So, if you change URLs on your app but both URLs use the same component, it won't be remounted. (You can prove this - clicking from "About Jack" to "Home" and then to "About Phil" _does_ work, because the routes use different components).
 
-Instead, React Router changes the _properties_ given to the component. Therefore, we need to make sure we are notified whenever the properties change, and refetch teh data accordingly. The [React Route lifecycle docs](https://github.com/reactjs/react-router/blob/master/docs/guides/ComponentLifecycle.md) are a very worthy read.
+Instead, React Router changes the _properties_ given to the component. Therefore, we need to make sure we are notified whenever the properties change, and refetch the data accordingly. The [React Route lifecycle docs](https://github.com/reactjs/react-router/blob/master/docs/guides/ComponentLifecycle.md) are a very worthy read.
 
 When we navigate from `/users/jackfranklin` to `/users/leggetter` the `Users` component will have `componentWillReceiveProps(nextProps)` called. If `this.props.params.username` has changed, we need to refetch the data.
 
@@ -50,7 +50,7 @@ However, notice that the index route is active always! This is because each rout
 
 (This exercise is taken largely from the [React Router tutorial](https://github.com/reactjs/react-router-tutorial/blob/start/lessons/12-navigating.md)).
 
-We've seen how to use `Link` for routing but hwo can we navigate dynamically? In this lesson you'll let people type in a username into a field and take them to `/users/:username` so they can be shown information on the user from GitHub.
+We've seen how to use `Link` for routing but how can we navigate dynamically? In this lesson you'll let people type in a username into a field and take them to `/users/:username` so they can be shown information on the user from GitHub.
 
 You'll need to write all the code yourself, but first let's discuss how React Router lets you programatically transiton routes.
 
@@ -265,6 +265,10 @@ setupDom();
 ```
 
 This file, when required, will set up the DOM using JSDom. All we need to do now is import it. Note that this __MUST__ be imported _before_ React.
+
+```
+require('./setup');
+```
 
 Let's write a new `Todo` test that tests we can toggle a todo from not done to done by clicking on it.
 
