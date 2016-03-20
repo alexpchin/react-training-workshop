@@ -1,3 +1,7 @@
+# MIDDLE
+
+Going to head more in the direction of building apps like we might in the "real world"
+
 ## 1-webpack-intro
 
 So far we've seen some of the basics of React but not how to structure larger applications.

@@ -1,4 +1,12 @@
-# Beginning
+# BEGINNING
+
+Get everyone to clone the repository.
+
+Go through the slides.
+
+Check everyone has npm 3 + Node 0.12 (ideally 4+).
+
+Note React versioning is weird: 0.14 vs 15.0.0 (rc)
 
 ## Setup
 - Clone the repository
