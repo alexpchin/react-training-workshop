@@ -1,11 +1,12 @@
-import React from 'react';
+var React = require('react');
 
-export default class IndexComponent extends React.Component {
-  render() {
+module.exports = React.createClass({
+  displayName: 'index',
+  render: function() {
     return (
       <div>
         <p>This is the index page</p>
       </div>
     );
   }
-}
+});

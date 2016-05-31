@@ -1,8 +1,8 @@
-import AppComponent from './components/app';
-import IndexComponent from './components/index';
-import AboutComponent from './components/about';
+var AppComponent = require('./components/app');
+var IndexComponent = require('./components/index');
+var AboutComponent = require('./components/about');
 
-const routes = {
+exports.routes = {
   path: '',
   component: AppComponent,
   childRoutes: [
@@ -15,6 +15,4 @@ const routes = {
       component: AboutComponent
     }
   ]
-}
-
-export { routes };
+};

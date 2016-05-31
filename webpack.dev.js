@@ -24,7 +24,7 @@ module.exports = {
     path: path.join(process.cwd(), './webpack'),
     filename: '[name]-build.js',
   },
-  devtool: 'eval',
+  devtool: 'cheap-source-map',
   module: {
     loaders: [{
       test: /\.js$/,

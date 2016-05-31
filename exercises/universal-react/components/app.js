@@ -1,8 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router';
+var React = require('react');
+var Link = require('react-router').Link;
 
-export default class AppComponent extends React.Component {
-  render() {
+module.exports = React.createClass({
+  displayName: 'app',
+  render: function() {
     return (
       <div>
         <h2>Welcome to my App</h2>
@@ -14,4 +15,4 @@ export default class AppComponent extends React.Component {
       </div>
     );
   }
-}
+});
