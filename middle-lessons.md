@@ -2,9 +2,11 @@
 
 Going to head more in the direction of building apps like we might in the "real world"
 
-## 1-webpack-intro
+## Webpack app from scratch
 
 So far we've seen some of the basics of React but not how to structure larger applications.
+
+Note that for this workshop I've set all this up for you, but we'll do it from scratch now so you can configure this for your own applications.
 
 It's not encouraged to have all your components as global variables in one file, rather that we split our files up into modules, with one React component per file, and use a _bundler_ to generate our built JavaScript file.
 
