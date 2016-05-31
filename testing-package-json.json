@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "test": "../../node_modules/.bin/tape -r ../../testing-babel-register test/*-test.js | ../../node_modules/.bin/faucet"
+  }
+}
