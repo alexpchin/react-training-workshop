@@ -124,7 +124,7 @@ And lets set up some scripts in `package.json`:
 
 And now we can run both those commands to have our app built and running!
 
-## 2-component-communication
+## component-communication
 
 (This example is largely taken from https://github.com/ryanflorence/react-training/blob/gh-pages/lessons/04-less-simple-communication.md and tweaked slighty).
 
@@ -261,11 +261,13 @@ ReactDOM.render(
 
 If you think this feels like Flux or Redux, you'd be right! We're missing a few bits and the structure isn't quite right - ideally an action wouldn't directly talk to the store, but instead send it to a dispatcher that would then send it onto the store, such that actions and the store are kept entirely separate. We'll tackle this section next with an Redux example.
 
-__Exercise__: with the code as it is, can you add a 'Delete' button to each todo that when clicked will cause the todo to be removed from the store? You might find it easier if you move the rendering of Todos and make a `Todo` component that is rendered for each todo.
+__Exercise__: Can you create a `Todo` component that is responsible for rendering an individual todo?
 
-(Solution is on branch `middle-2-delete-exercise`)
+__Exercise__: with the code as it is, can you add a 'Delete' button to each todo that when clicked will cause the todo to be removed from the store?
 
-## 2.5-redux-intro
+Solutions: https://github.com/jackfranklin/react-training-workshop/commit/29181086e6eb5f815102b05a0ea1a43aa97e9678
+
+## redux-intro
 
 Before we look at Redux with React, let's do a basic Redux example on its own. This will help gain some familiarity with Redux without having to deal with the React specific parts.
 
@@ -320,15 +322,9 @@ We then `dispatch` actions and log out the current state. And that's it! That's 
 __Exercise__: add a new action `RESET` that will set the counter back to 0.
 
 
-## 3-redux
+## redux
 
 Now let's look at using [Redux](http://redux.js.org/index.html)  rather than implementing ourselves.
-
-First, we need to install. Note that Redux can be used without React, so we'll install the react-redux package too.
-
-```
-npm install --save redux react-redux
-```
 
 PS: take a deep breath! Redux at first can be confusing and quite tricky to set up, but once you get set up it's then much easier to deal with user actions and data changing. The overhead at first pays off hugely :)
 
@@ -490,9 +486,9 @@ __Exercise__: Add the ability to delete a todo, but this time using Redux. You'l
 - create a new `Todo` component to represent a todo (like we did in exercise 2), and hook it up to the store so it can `dispatch()`.
 - Have a button that dispatches the new action type.
 
-The solution for this exercise is on `middle-3-delete-exercise`.
+https://github.com/jackfranklin/react-training-workshop/commit/67a0ff1ae2c976ecc00d05c51393d4708d5d250e
 
-## 4-better-redux
+## better-redux
 
 As your app grows you'll want to split your reducers up a little to make them easier to work with. Additionally, you'll probably want some handy developer tools!
 
@@ -698,7 +694,7 @@ Here we map each key in our `state` object to a reducer that is responsible for 
 
 __Exercise__: add a button to let me log out when I'm logged in. It should only appear when the user is logged in.
 
-## 5-async-actions
+## async-actions
 
 So far we've only dealt with actions that are synchronous. Normally though we will have some form of async action, the most common of which being an HTTP request to fetch some data.
 
