@@ -21,6 +21,17 @@ npm run serve
 
 This will open up `localhost:3001` and give you access to all the exercises.
 
+# Lesson Order
+
+There's a load of notes in `lessons/` that map to exercises. The order they should be done is as follows:
+
+- lessons/introductions.md (uses the `beginning/` folder)
+- lessons/react-router-lessons.md
+- lessons/communication-redux-lessons.md
+- lessons/testing-react-lessons.md
+- lessons/final-lessons.md
+
+
 ### Credits
 
 A lot of this content was taken / inspired by other publically available examples / repositories online.
