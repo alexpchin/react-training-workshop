@@ -7,14 +7,29 @@ function getDirectories(srcpath) {
   });
 }
 
+function getFiles(srcpath) {
+  return fs.readdirSync(srcpath).filter(function(file) {
+    return fs.statSync(path.join(srcpath, file)).isFile() &&
+      file.indexOf('.js') > -1;
+  });
+};
+
 var entryPoints = {};
-var webpackEntryPoints = getDirectories('exercises').forEach(function(dir) {
+getDirectories('exercises').forEach(function(dir) {
   entryPoints[dir] = path.join(
     process.cwd(),
     'exercises',
     dir,
     'src',
     'app.js'
+  );
+});
+getFiles('beginning/src').forEach(function(file) {
+  entryPoints['beginning-' + file.split('.')[0]] = path.join(
+    process.cwd(),
+    'beginning',
+    'src',
+    file
   );
 });
 
