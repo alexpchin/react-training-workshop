@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Header = require('./header');
 var TodoStore = require('./todo-store');
+var Todo = require('./todo');
 
 var App = React.createClass({
   getStateFromStore: function() {
@@ -22,7 +23,7 @@ var App = React.createClass({
 
   renderTodos: function() {
     return this.state.todos.map(function(todo) {
-      return <p key={todo}>{todo}</p>;
+      return <Todo key={todo} todo={todo}>{todo}</Todo>;
     });
   },
 
