@@ -15,7 +15,7 @@ var store = Redux.createStore(todoAppReducers);
 var App = React.createClass({
   renderTodos: function() {
     return this.props.todos.map(function(todo) {
-      return <p key={todo}>{todo}</p>;
+      return <Todo key={todo} todo={todo}>{todo}</Todo>;
     });
   },
 
