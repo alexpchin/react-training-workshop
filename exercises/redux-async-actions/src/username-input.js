@@ -5,7 +5,7 @@ var fetchUser = require('./actions').fetchUser;
 var UsernameInput = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    this.props.dispatch(fetchUser(this.refs.userInput.value));
+    console.log('form got submitted!');
   },
 
   render: function() {

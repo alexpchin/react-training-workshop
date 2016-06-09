@@ -15,14 +15,7 @@ var devTools = window.devToolsExtension ? window.devToolsExtension() : function(
 
 
 var store = Redux.createStore(
-  githubReducers,
-  {},
-  Redux.compose(
-    Redux.applyMiddleware(
-      thunkMiddleware
-    ),
-    devTools
-  )
+  githubReducers
 );
 
 var App = React.createClass({
