@@ -40,16 +40,7 @@ test('Todo component', function(t) {
   });
 
   t.test('toggling a TODO calls the given function', function(t) {
-    t.plan(1);
-    var doneCallback = function(id) { t.equal(id, 1) };
-    var todo = { id: 1, name: 'Buy Milk', done: false };
-
-    var result = TestUtils.renderIntoDocument(
-      <Todo todo={todo} doneChange={doneCallback} deleteTodo={function() {}} />
-    );
-
-    var todoText = TestUtils.findRenderedDOMComponentWithTag(result, 'p');
-    TestUtils.Simulate.click(todoText);
+    // write this test please!
   });
 });
 
