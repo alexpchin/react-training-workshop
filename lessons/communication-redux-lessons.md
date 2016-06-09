@@ -484,9 +484,13 @@ The pattern is as follows:
 3. When the reducer returns the new state, Redux updates the props given to the components and in doing so causes React to rerender.
 
 __Exercise__: Add the ability to delete a todo, but this time using Redux. You'll need to:
+
 - create a new action
+
 - update the reducer
-- create a new `Todo` component to represent a todo (like we did in exercise 2), and hook it up to the store so it can `dispatch()`.
+
+- hook the existing `Todo` component up so it can dispatch actions
+
 - Have a button that dispatches the new action type.
 
 https://github.com/jackfranklin/react-training-workshop/commit/67a0ff1ae2c976ecc00d05c51393d4708d5d250e
