@@ -30,5 +30,5 @@ var Home = React.createClass({
   }
 });
 
-module.exports = withRouter(Home);
+module.exports = Home;
 
