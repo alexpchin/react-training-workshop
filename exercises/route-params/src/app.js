@@ -10,6 +10,12 @@ var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
 var Users = require('./users');
 
+var AppLink = React.createClass({
+  render: function() {
+    return <Link {...this.props} activeClassName="active" onlyActiveOnIndex={true} />;
+  }
+});
+
 var App = React.createClass({
   render: function() {
     return (

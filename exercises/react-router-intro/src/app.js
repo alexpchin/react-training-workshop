@@ -14,9 +14,7 @@ var App = React.createClass({
   }
 });
 
-ReactDOM.render(
-  <Router history={hashHistory}>
-    <Route path="/" component={App} />
-  </Router>,
+React.render(
+  <App />,
   document.getElementById('app')
-)
+);

@@ -38,10 +38,7 @@ var About = React.createClass({
 
 ReactDOM.render(
   <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Home} />
-      <Route path="/about" component={About} />
-    </Route>
+    <Route path="/" component={App} />
   </Router>,
   document.getElementById('app')
 )
