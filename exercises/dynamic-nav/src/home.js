@@ -1,9 +1,7 @@
+var withRouter = require('react-router').withRouter
 var React = require('react');
 
 var Home = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.object
-  },
   getInitialState: function() {
     return {
       formValue: ''
@@ -13,8 +11,11 @@ var Home = React.createClass({
     // update the state with the new text value
   },
   onSubmit: function(e) {
+    e.preventDefault();
     // get the value of the form, submit it
     // and pass it to the router to transition to a new route
+    // tip: this.props.router.push!
+    console.log(this.props.router);
   },
   render: function() {
     return (
@@ -29,5 +30,5 @@ var Home = React.createClass({
   }
 });
 
-module.exports = Home;
+module.exports = withRouter(Home);
 

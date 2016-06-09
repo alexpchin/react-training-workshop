@@ -91,6 +91,37 @@ Now we're going to dive a little more into React Router and explore how to use i
 
 First, we're going to build an app that lets you view a person's GitHub repositories. It will have one url, `/users/:name`, where `:name` is replaced with the user we want the information on (for example `/users/jackfranklin`).
 
+```js
+var React = require('react');
+
+var Users = React.createClass({
+  getInitialState: function() {
+    return {};
+  },
+  componentWillMount: function() {
+    this.fetchUser(this.props.params.username);
+  },
+  fetchUser: function(username) {
+    fetch('http://github-proxy-api.herokuapp.com/users/' + username).then(function(data) {
+      return data.json();
+    }).then(function(data) {
+      this.setState({ user: data });
+    }.bind(this));
+  },
+  render: function() {
+    if (this.state.user) {
+      return (
+        <p>Repositories count: {this.state.user.public_repos}</p>
+      );
+    } else {
+      return <p>Loading</p>;
+    }
+  }
+});
+
+module.exports = Users;
+```
+
 Load up the code in the browser and click on the "About Jack" link. You'll see "Loading" very briefly and then see the repositories count shown (at the time of writing it's 201). Now, from that page, click the "About Phil" link. Notice how it doesn't change. Why not?
 
 The code for fetching a user is triggered in the `componentWillMount` lifecycle hook:
@@ -113,10 +144,6 @@ Solution:
 
 ```js
 componentWillReceiveProps: function(newProps) {
-  if (!newProps || !newProps.params || !newProps.params.username) {
-    return;
-  }
-
   var newName = newProps.params.username;
   var oldName = this.props.params.username;
 
@@ -131,29 +158,33 @@ Note that `componentWillReceiveProps` is called numerous times, so it's always i
 
 Finally, notice how we style the link when it's active, which is a feature React Router provides out of the box. You can pass an `activeClassName` prop to a `Link` to do this.
 
-However, notice that the index route is active always! This is because each route matches `/`. We can fix this using `IndexLink`, which React Router provides for this exact reason.
+However, notice that the index route is active always! This is because each route matches `/`. We can fix this by setting `onlyActiveOnIndex` to true on links, so that they are only valid when their exact URL is active.
+
+Rather than repeat this we can create a higher order component that will do this for us.
+
+```
+var AppLink = React.createClass({
+  render: function() {
+    return <Link {...this.props} activeClassName="active" onlyActiveOnIndex={true} />;
+  }
+});
+```
+
 
 ## dynamic-nav
-
-(This exercise is taken largely from the [React Router tutorial](https://github.com/reactjs/react-router-tutorial/blob/start/lessons/12-navigating.md)).
 
 We've seen how to use `Link` for routing but how can we navigate dynamically? In this lesson you'll let people type in a username into a field and take them to `/users/:username` so they can be shown information on the user from GitHub.
 
 You'll need to write all the code yourself, but first let's discuss how React Router lets you programatically transiton routes.
 
-React has a feature called _context_. This lets you pass data down from parents to children, grandchildren and beyond without manually passing props down the chain. [React docs](https://facebook.github.io/react/docs/context.html).
+ReactRouter exposes a function called `withRouter` that takes a component and returns another component that is the same but with access to `this.props.router`.
 
-Note that you should use context sparingly, because it can make it confusing to figure out where data is coming from.
-
-React Router exposes a `router` object onto the context, which we hook into to programatically transition. To access a property on context a child component has to define `contextTypes`, and ask for the right property. In our case that's:
 
 ```js
-contextTypes: {
-  router: React.PropTypes.object
-}
+module.exports = withRouter(Home);
 ```
 
-Now we have access to `this.context.router` within a component. You can call `this.context.router.push('/foo')` to transition to a new route.
+You can call `this.props.router.push('/foo')` to transition to a new route.
 
 __Exercise__: take the code from `/end/2-dynamic-nav` and update it so it:
 
@@ -161,6 +192,4 @@ __Exercise__: take the code from `/end/2-dynamic-nav` and update it so it:
 2. You'll need to update `src/Home` with some fits of functionality to make this happen:
   - track the input value as it changes
   - define the `onSubmit` method to use `this.context.router.push` to push the new path.
-
-You can check out `end-2-solutions` to see my solution.
 
