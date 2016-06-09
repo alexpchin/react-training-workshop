@@ -162,6 +162,8 @@ However, notice that the index route is active always! This is because each rout
 
 Rather than repeat this we can create a higher order component that will do this for us.
 
+Rather than repeat this we can create a higher order component that will do this for us.
+
 ```
 var AppLink = React.createClass({
   render: function() {

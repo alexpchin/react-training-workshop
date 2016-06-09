@@ -48,7 +48,7 @@ We won't write tests for all of the state functions, but if this were a real app
 
 ## testing-shallow-render
 
-Moving onto `4-shallow-render`, we'll start to look at how we can test React components but _without_ the need for a DOM.
+Now we'll start to look at how we can test React components but _without_ the need for a DOM.
 
 We do this by using the React [test utils](https://facebook.github.io/react/docs/test-utils.html) which we can install:
 

@@ -506,7 +506,7 @@ If you're using Google Chrome, you can use the [Redux Devtools Extension](https:
 ```js
 var store = Redux.createStore(
   todoAppReducers,
-  window.devToolsExtension ? window.devToolsExtension() : function(x) { return x }
+  window.devToolsExtension ? window.devToolsExtension() : undefined
 );
 ```
 
@@ -701,7 +701,7 @@ Here we map each key in our `state` object to a reducer that is responsible for 
 
 __Exercise__: add a button to let me log out when I'm logged in. It should only appear when the user is logged in.
 
-## async-actions
+## redux-async-actions
 
 So far we've only dealt with actions that are synchronous. Normally though we will have some form of async action, the most common of which being an HTTP request to fetch some data.
 
@@ -829,7 +829,7 @@ fetchUser: function(username) {
     // first, dispatch the GITHUB_REQUEST action
     dispatch(actions.requestGithub(username));
 
-    return fetch('https://api.github.com/users/' + username)
+    return fetch('http://github-proxy-api.herokuapp.com/users' + username)
       .then(function(resp) { return resp.json() })
       .then(function(json) {
         dispatch(actions.receiveGithub(username, json));
@@ -950,6 +950,3 @@ You'll need to:
 - create an action that is dispatched when the user clicks on a new username to become active
 - update the reducer to set `activeUser` when the new action is dispatched
 - create a new component that renders a list of all users and allows them to be clicked on, dispatching the new action and hence making them active
-
-The solutions for both of the above are on the `middle-5-solutions` branch.
-
