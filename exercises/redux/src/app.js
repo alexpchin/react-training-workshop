@@ -11,6 +11,7 @@ var todoAppReducers = require('./reducers');
 var Header = require('./header');
 
 var store = Redux.createStore(todoAppReducers);
+var Todo = require('./todo');
 
 var App = React.createClass({
   renderTodos: function() {

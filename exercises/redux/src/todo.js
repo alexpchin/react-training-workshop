@@ -4,7 +4,7 @@ var Todo = React.createClass({
   render: function() {
     return (
       <div>
-        <p>{ todo }</p>
+        <p>{ this.props.todo }</p>
       </div>
     )
   }
