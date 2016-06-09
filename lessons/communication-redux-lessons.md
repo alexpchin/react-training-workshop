@@ -57,7 +57,8 @@ module.exports = {
       loader: 'babel',
       exclude: /node_modules/,
       query: {
-        cacheDirectory: true
+        cacheDirectory: true,
+        presets: ["react"]
       }
     }]
   }
@@ -191,10 +192,12 @@ var TodoStore = {
     this._state.todos.push(todo);
     this.onChange();
   },
-
-  onChange: function() {}
 }
+
+module.exports = TodoStore;
 ```
+
+Any component that wants to listen can define `TodoStore.onChange()` to be notified of the changes.
 
 Now our action can just call into this store:
 
@@ -259,11 +262,13 @@ ReactDOM.render(
 
 If you think this feels like Flux or Redux, you'd be right! We're missing a few bits and the structure isn't quite right - ideally an action wouldn't directly talk to the store, but instead send it to a dispatcher that would then send it onto the store, such that actions and the store are kept entirely separate. We'll tackle this section next with an Redux example.
 
-__Exercise__: Can you create a `Todo` component that is responsible for rendering an individual todo?
-
 __Exercise__: with the code as it is, can you add a 'Delete' button to each todo that when clicked will cause the todo to be removed from the store?
 
-Solutions: https://github.com/jackfranklin/react-training-workshop/commit/29181086e6eb5f815102b05a0ea1a43aa97e9678
+- add an action
+- add a delete button to the `Todo` component
+- make the delete button send an action
+- add a new store method that can delete a todo
+
 
 ## redux-intro
 
