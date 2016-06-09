@@ -10,6 +10,7 @@ var todoAppReducers = require('./reducers');
 
 var Header = require('./header');
 
+var Todo = require('./todo');
 
 var App = React.createClass({
   renderTodos: function() {
