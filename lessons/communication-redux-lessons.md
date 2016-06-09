@@ -506,7 +506,7 @@ If you're using Google Chrome, you can use the [Redux Devtools Extension](https:
 ```js
 var store = Redux.createStore(
   todoAppReducers,
-  window.devToolsExtension ? window.devToolsExtension() : function(x) { return x }
+  window.devToolsExtension ? window.devToolsExtension() : undefined
 );
 ```
 
