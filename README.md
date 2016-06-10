@@ -48,6 +48,25 @@ There's a load of notes in `lessons/` that map to exercises. The order they shou
 - https://github.com/reactjs/react-router/blob/master/docs/guides/ComponentLifecycle.md
 - https://packagecontrol.io/packages/Babel
 - https://github-proxy-api.herokuapp.com/
+- https://github.com/reactjs/react-router-tutorial
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+- https://davidwalsh.name/remove-item-array-javascript
+- https://github.com/AtomLinter/linter-eslint
+- http://eslint.org/
+- https://www.youtube.com/watch?v=xsSnOQynTHs
+- https://egghead.io/courses/getting-started-with-redux
+- https://github.com/mobxjs/mobx
+- https://devchat.tv/js-jabber/179-jsj-redux-and-react-with-dan-abramov
+- https://devchat.tv/js-jabber/181-jsj-the-evolution-of-flux-libraries-with-andrew-clark-and-dan-abramov
+- https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en
+- https://24ways.org/2015/universal-react/
+- https://github.com/jackfranklin/universal-react-example
+- https://www.youtube.com/watch?v=srdKq0DckXQ
+- https://gocardless.com/blog/how-we-built-the-new-gocardless.com/
+- https://github.com/gocardless/splash-pages
+- http://12devsofxmas.co.uk/2015/12/day-2-testing-react-applications/
+- https://github.com/reactjs/react-router-redux
+- http://glenmaddern.com/articles/css-modules
 
 
 ### Credits
